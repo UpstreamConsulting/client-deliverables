@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upstream Consulting — AI Opportunity Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&family=Aboreto&family=Gotu&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #222240;
+    --surface2: #2a2a4a;
+    --border: rgba(255,255,255,.08);
+    --accent: #d4a574;
+    --accent2: #c4955e;
+    --teal: #4a9b8e;
+    --text: #ffffff;
+    --muted: rgba(255,255,255,.6);
+    --dim: rgba(255,255,255,.3);
+    --danger: #e04a4a;
+    --gold: #d4a574;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Gotu', 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Nav ── */
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: 'Aboreto', sans-serif;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .nav-brand span { color: var(--muted); font-style: italic; }
+  .nav-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    color: var(--dim);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Section Nav ── */
+  .section-nav {
+    position: sticky;
+    top: 50px;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 28px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .section-nav a {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dim);
+    text-decoration: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .section-nav a:hover { color: var(--accent); border-color: var(--border); }
+  .section-nav a.active { color: var(--accent); border-color: rgba(212,165,116,0.3); background: rgba(212,165,116,0.06); }
+
+  /* ── Container ── */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  /* ── Hero ── */
+  .hero { margin-bottom: 56px; }
+  .hero-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-label::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 48px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+  .hero h1 {
+    font-family: 'Aboreto', sans-serif;
+    font-size: clamp(2rem, 4.5vw, 3.4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 16px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .hero h1 em { color: var(--gold); font-style: italic; }
+  .hero .subtitle {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 640px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 48px; }
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    display: block;
+    height: 1px;
+    flex: 1;
+    background: var(--border);
+  }
+  .section h2 {
+    font-family: 'Aboreto', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .section h2 em { color: var(--gold); font-style: italic; }
+  .section > p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+    max-width: 640px;
+    line-height: 1.7;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    transition: border-color 0.2s;
+    margin-bottom: 16px;
+  }
+  .card:hover { border-color: var(--dim); }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .card-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .card-subtitle {
+    font-size: 0.72rem;
+    color: var(--dim);
+    margin-top: 2px;
+  }
+  .card-body { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+  .card-body ul { padding-left: 18px; margin-top: 8px; }
+  .card-body li { margin-bottom: 6px; }
+  .card-body li strong { color: var(--text); }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  /* ── Workflow rows ── */
+  .workflow-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+  }
+  .workflow-row:hover { border-color: var(--dim); }
+
+  .wf-label {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .wf-label small {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 300;
+    color: var(--dim);
+    margin-top: 2px;
+  }
+  .wf-arrow { font-size: 1.1rem; color: var(--teal); }
+  .wf-after {
+    font-size: 0.82rem;
+    color: var(--teal);
+    font-weight: 400;
+  }
+  .wf-after small {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--dim);
+    font-weight: 300;
+    margin-top: 2px;
+  }
+  .wf-savings {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    color: var(--teal);
+    background: rgba(74,155,142,0.1);
+    border: 1px solid rgba(74,155,142,0.2);
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Tool table ── */
+  .tool-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+  .tool-table th {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dim);
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+  }
+  .tool-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--muted);
+    vertical-align: top;
+  }
+  .tool-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .tool-table .tool-name { font-weight: 500; color: var(--text); }
+  .tool-table .tool-cost {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    color: var(--teal);
+  }
+
+  /* ── Economics callout ── */
+  .econ-callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    margin: 24px 0;
+  }
+  .econ-callout .big-num {
+    font-family: 'Aboreto', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+  }
+  .econ-callout .big-label {
+    font-size: 0.82rem;
+    color: var(--dim);
+    margin-top: 4px;
+    margin-bottom: 20px;
+  }
+  .econ-stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .econ-stat { text-align: center; }
+  .econ-stat .num {
+    font-family: 'Aboreto', sans-serif;
+    font-size: 1.4rem;
+    color: var(--text);
+    letter-spacing: 0.04em;
+  }
+  .econ-stat .label {
+    font-size: 0.7rem;
+    color: var(--dim);
+    margin-top: 2px;
+  }
+
+  /* ── Cost layers ── */
+  .cost-layers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .cost-layer {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+  .cost-layer:hover { border-color: var(--dim); }
+  .layer-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .layer-value {
+    font-family: 'Aboreto', sans-serif;
+    font-size: 1.3rem;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+  .layer-desc {
+    font-size: 0.75rem;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  /* ── Scope table ── */
+  .scope-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+  }
+  .scope-table th {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dim);
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+  }
+  .scope-table td {
+    padding: 11px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--muted);
+  }
+  .scope-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .scope-table .scope-hrs {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    color: var(--teal);
+  }
+
+  /* ── Trial card ── */
+  .trial-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 32px;
+  }
+  .trial-card h3 {
+    font-family: 'Aboreto', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .trial-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .trial-row:last-child { border-bottom: none; }
+  .trial-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    flex-shrink: 0;
+    background: var(--surface2);
+    color: var(--accent);
+  }
+  .trial-row h4 { font-size: 0.88rem; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+  .trial-row p { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── Divider ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 48px 0;
+  }
+
+  /* ── Footer ── */
+  .footer-bar {
+    text-align: center;
+    padding: 24px 32px;
+    font-size: 0.72rem;
+    color: var(--dim);
+    border-top: 1px solid var(--border);
+  }
+  .footer-bar a { color: var(--accent); text-decoration: none; }
+
+  /* ── Responsive ── */
+  @media (max-width: 680px) {
+    .container { padding: 32px 20px 60px; }
+    .nav-bar { padding: 12px 20px; }
+    .workflow-row { grid-template-columns: 1fr; gap: 8px; }
+    .wf-arrow { display: none; }
+    .card-grid { grid-template-columns: 1fr; }
+    .cost-layers { grid-template-columns: 1fr; }
+    .econ-stats { gap: 24px; }
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { background: #fff; color: #1a1a2e; }
+    .nav-bar, .section-nav { background: #fff; border-bottom: 1px solid #ddd; }
+    .nav-brand { color: #1a1a2e; }
+    .card, .workflow-row, .trial-card, .econ-callout, .cost-layer {
+      background: #fff; border: 1px solid #ddd;
+    }
+    h1, h2, .card-title, .wf-label, .trial-card h3, .trial-row h4 { color: #1a1a2e; }
+    h1 em, h2 em { color: #c4955e; }
+    .section-nav a.active { background: #f5f0eb; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-bar">
+  <div class="nav-brand">Upstream <span>Consulting</span></div>
+  <div class="nav-date">April 2026 &middot; Prepared for Ted Lamboo Accounting</div>
+</div>
+
+<!-- SECTION NAV -->
+<div class="section-nav" id="section-nav">
+  <a href="#discussed" class="active">Discussed</a>
+  <a href="#automation">Automation</a>
+  <a href="#tools">Tools &amp; APIs</a>
+  <a href="#economics">Economics</a>
+  <a href="#trial">Trial Seat</a>
+</div>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Meeting Follow-Up &middot; AI Opportunity Map</div>
+    <h1>Your workflows,<br><em>supercharged.</em></h1>
+    <p class="subtitle">
+      A breakdown of the automation opportunities we discussed &mdash; what's possible today, what tools exist, and how the economics work. Every recommendation pays for itself.
+    </p>
+  </div>
+
+  <!-- SECTION 1: What We Discussed -->
+  <div class="section">
+    <div class="section-label" id="discussed">01 &mdash; What We Discussed</div>
+    <h2>The accounting workflow, <em>mapped</em></h2>
+    <p>We walked through how data moves through your firm today &mdash; from raw documents to client-ready outputs &mdash; and identified where AI shifts you from doing the work to auditing the work.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">&#128229;</div>
+        <div class="card-title">Intake</div>
+        <div class="card-subtitle">Where data enters</div>
+        <div class="card-body" style="margin-top: 10px;">
+          Invoices, receipts, tax documents, client emails, bank statements &mdash; arriving via email, mail, portal, and phone. Currently requires manual sorting, entry, and filing.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">&#9881;</div>
+        <div class="card-title">Processing</div>
+        <div class="card-subtitle">Where effort lives</div>
+        <div class="card-body" style="margin-top: 10px;">
+          Data entry into QuickBooks or Sage. GL coding, bank reconciliation, payroll calculation, GST/PST tracking. Repetitive, high-volume, error-prone when done manually.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">&#128202;</div>
+        <div class="card-title">Reporting</div>
+        <div class="card-subtitle">Where value is delivered</div>
+        <div class="card-body" style="margin-top: 10px;">
+          Financial statements, tax returns, client advisories, year-end packages. The work your clients see &mdash; and the work that earns trust and retains relationships.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2: Automation Opportunities -->
+  <div class="section">
+    <div class="section-label" id="automation">02 &mdash; Automation Opportunities</div>
+    <h2>Before &amp; after &mdash; <em>the shift</em></h2>
+    <p>Here's what changes when AI handles the mechanical work and you focus on the judgment calls.</p>
+
+    <div class="workflow-row">
+      <div class="wf-label">Invoice &amp; Receipt Intake<small>Manual data entry from PDFs, emails, paper</small></div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-after">AI scans, classifies, extracts, routes to approval<small>Auto-coded to GL accounts, matched to vendors</small></div>
+      <div class="wf-savings">70&ndash;80% saved</div>
+    </div>
+
+    <div class="workflow-row">
+      <div class="wf-label">Bank Reconciliation<small>Download statements, match transactions, investigate discrepancies</small></div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-after">Auto-import via bank feeds, rule-based categorization<small>You review exceptions only</small></div>
+      <div class="wf-savings">50&ndash;60% saved</div>
+    </div>
+
+    <div class="workflow-row">
+      <div class="wf-label">Payroll &amp; Remittances<small>Calculate gross/net, CPP, EI, tax, submit to CRA</small></div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-after">Fully automated calculation, direct deposit, CRA remittance<small>T4s generated automatically</small></div>
+      <div class="wf-savings">80&ndash;90% saved</div>
+    </div>
+
+    <div class="workflow-row">
+      <div class="wf-label">Client Document Collection<small>Email back and forth, chasing missing docs, manual tracking</small></div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-after">Client portal with checklists, automated reminders<small>Real-time status &mdash; no chasing</small></div>
+      <div class="wf-savings">60&ndash;70% saved</div>
+    </div>
+
+    <div class="workflow-row">
+      <div class="wf-label">GST/HST Filing<small>Pull sales/purchase data, calculate net tax, file manually</small></div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-after">Auto-calculated from coded transactions<small>Filing data ready, one-click submission</small></div>
+      <div class="wf-savings">50&ndash;60% saved</div>
+    </div>
+
+    <div class="workflow-row">
+      <div class="wf-label">Monthly Financial Summaries<small>Compile numbers, write narratives, prepare for client meetings</small></div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-after">AI-drafted variance analysis, anomaly flags, talking points<small>Review and refine &mdash; not write from scratch</small></div>
+      <div class="wf-savings">40&ndash;60% saved</div>
+    </div>
+
+    <div class="workflow-row">
+      <div class="wf-label">Year-End &amp; Tax Return Prep<small>Final trial balance, working papers, GIFI mapping, returns</small></div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-after">Auto-pull trial balance, templated statements, AI-assisted notes<small>Professional judgment stays yours</small></div>
+      <div class="wf-savings">30&ndash;50% saved</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3: Tools & Integrations -->
+  <div class="section">
+    <div class="section-label" id="tools">03 &mdash; Tools, APIs &amp; Integrations</div>
+    <h2>What exists <em>today</em></h2>
+    <p>These aren't hypothetical. These are production-ready tools, APIs, and integrations that connect directly to the software you already use.</p>
+
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <table class="tool-table">
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>What It Does</th>
+            <th>Connects To</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tool-name">Hubdoc</span></td>
+            <td>Auto-fetch bank/utility docs, receipt scanning, data extraction</td>
+            <td>QuickBooks Online</td>
+            <td class="tool-cost">Free w/ QBO Plus</td>
+          </tr>
+          <tr>
+            <td><span class="tool-name">Dext (Receipt Bank)</span></td>
+            <td>AI receipt/invoice scanning, auto-categorization, line-item extraction</td>
+            <td>QBO, Sage, Xero</td>
+            <td class="tool-cost">Low monthly</td>
+          </tr>
+          <tr>
+            <td><span class="tool-name">Wagepoint</span></td>
+            <td>Canadian payroll, auto CRA remittances, T4 generation, direct deposit</td>
+            <td>QBO, Sage</td>
+            <td class="tool-cost">Per-employee</td>
+          </tr>
+          <tr>
+            <td><span class="tool-name">TaxFolder</span></td>
+            <td>Secure client document exchange, e-signatures, tax-season checklists</td>
+            <td>Canadian tax software</td>
+            <td class="tool-cost">Low monthly</td>
+          </tr>
+          <tr>
+            <td><span class="tool-name">Fathom</span></td>
+            <td>Visual financial reports, KPI dashboards, client-facing analytics</td>
+            <td>QBO, Xero</td>
+            <td class="tool-cost">Low monthly</td>
+          </tr>
+          <tr>
+            <td><span class="tool-name">QuickBooks Online API</span></td>
+            <td>Full automation &mdash; invoices, payments, journal entries, reports, bank transactions</td>
+            <td>Custom builds</td>
+            <td class="tool-cost">Free (with QBO)</td>
+          </tr>
+          <tr>
+            <td><span class="tool-name">Sage Cloud API</span></td>
+            <td>Contacts, invoices, payments, bank transactions, ledger accounts</td>
+            <td>Custom builds</td>
+            <td class="tool-cost">Free (with Sage)</td>
+          </tr>
+          <tr>
+            <td><span class="tool-name">Claude AI Agents</span></td>
+            <td>Custom-built agents for document review, data extraction, report drafting, anomaly detection</td>
+            <td>All of the above</td>
+            <td class="tool-cost">Included in engagement</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top: 24px;">
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon">&#128268;</div>
+            <div><div class="card-title">APIs Available</div></div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li><strong>QuickBooks Online</strong> &mdash; full read/write access to invoices, payments, journal entries, reports, tax codes</li>
+              <li><strong>Sage Business Cloud</strong> &mdash; contacts, invoices, bank transactions, ledger accounts</li>
+              <li><strong>CRA EFILE</strong> &mdash; electronic filing via certified tax software (Profile, Taxprep)</li>
+              <li><strong>Caseware SmartSync</strong> &mdash; auto-pull trial balances from QBO/Sage</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon">&#129302;</div>
+            <div><div class="card-title">What Levi Builds</div></div>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li><strong>Custom AI agents</strong> &mdash; purpose-built for your workflows, not generic chatbots</li>
+              <li><strong>MCP connections</strong> &mdash; direct integrations between AI and your accounting tools</li>
+              <li><strong>Approval workflows</strong> &mdash; AI drafts, you review and approve. Nothing ships without your eyes</li>
+              <li><strong>Dashboard &amp; reporting</strong> &mdash; real-time visibility into what's been processed, flagged, or pending</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4: Economics -->
+  <div class="section">
+    <div class="section-label" id="economics">04 &mdash; The Economics</div>
+    <h2>The cost is fractional. <em>The capacity is not.</em></h2>
+    <p>The tools that power automation are a fraction of what they return. The real investment is in the hours to architect and build them &mdash; and you control exactly where those hours go.</p>
+
+    <div class="econ-callout">
+      <div class="big-num">3&ndash;5x</div>
+      <div class="big-label">estimated capacity multiplier across automated workflows</div>
+      <div class="econ-stats">
+        <div class="econ-stat">
+          <div class="num">&lt;5%</div>
+          <div class="label">of revenue for tool subscriptions</div>
+        </div>
+        <div class="econ-stat">
+          <div class="num">50&ndash;90%</div>
+          <div class="label">reduction in mechanical work</div>
+        </div>
+        <div class="econ-stat">
+          <div class="num">Weeks</div>
+          <div class="label">not months &mdash; to see first results</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 24px;">
+      <div class="card-body" style="font-size: 0.88rem; line-height: 1.9;">
+        <strong>The real return isn't cost savings &mdash; it's capacity.</strong><br><br>
+        Every hour of mechanical work the AI handles is an hour you can spend on advisory work, new clients, or higher-value services. The tools don't replace your expertise &mdash; they remove the mechanical work that sits between your expertise and your clients.
+      </div>
+    </div>
+
+    <h3 style="font-family: 'Aboreto', sans-serif; font-weight: 400; font-size: 1.1rem; color: var(--text); margin-bottom: 16px; letter-spacing: 0.06em; text-transform: uppercase;">How Levi's time works</h3>
+
+    <div class="cost-layers">
+      <div class="cost-layer">
+        <div class="layer-label">Tool Subscriptions</div>
+        <div class="layer-value">Fractional</div>
+        <div class="layer-desc">Third-party tools bill monthly at low per-seat or per-use rates. Many are free or included with software you already have.</div>
+      </div>
+      <div class="cost-layer">
+        <div class="layer-label">Levi's Build Time</div>
+        <div class="layer-value">Hourly</div>
+        <div class="layer-desc">Architecture, integrations, agents, MCP connections, dashboards. Billed hourly &mdash; you control the scope and pace.</div>
+      </div>
+      <div class="cost-layer">
+        <div class="layer-label">Your Choice</div>
+        <div class="layer-value">You decide</div>
+        <div class="layer-desc">Pick the workflows that matter most. Set hour limits. Expand when you see results. No annual contracts &mdash; no surprises.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 24px; border-left: 3px solid var(--accent);">
+      <div class="card-body" style="font-size: 0.88rem; line-height: 1.9;">
+        <strong>How it works in practice:</strong> We map out everything that can be automated. You choose which workflows to prioritize. Levi builds them on an hourly basis &mdash; you set the monthly hour cap. Start small, expand as results come in. Every hour invested in automation compounds &mdash; it's a one-time build that keeps paying back.
+      </div>
+    </div>
+
+    <div class="card" style="padding: 0; overflow: hidden; margin-top: 24px;">
+      <table class="scope-table">
+        <thead>
+          <tr>
+            <th>Workflow</th>
+            <th>Build Estimate</th>
+            <th>Ongoing Savings</th>
+            <th>Payback</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Invoice &amp; receipt intake automation</td>
+            <td class="scope-hrs">8&ndash;12 hrs</td>
+            <td>5&ndash;10 hrs/week returned</td>
+            <td class="scope-hrs">&lt; 2 weeks</td>
+          </tr>
+          <tr>
+            <td>QBO/Sage AI agent (read/write)</td>
+            <td class="scope-hrs">10&ndash;16 hrs</td>
+            <td>Eliminates manual data entry</td>
+            <td class="scope-hrs">&lt; 3 weeks</td>
+          </tr>
+          <tr>
+            <td>Client document portal + reminders</td>
+            <td class="scope-hrs">6&ndash;10 hrs</td>
+            <td>3&ndash;5 hrs/week in tax season</td>
+            <td class="scope-hrs">&lt; 2 weeks</td>
+          </tr>
+          <tr>
+            <td>Monthly report &amp; variance drafting</td>
+            <td class="scope-hrs">6&ndash;8 hrs</td>
+            <td>2&ndash;4 hrs/client/month</td>
+            <td class="scope-hrs">&lt; 1 month</td>
+          </tr>
+          <tr>
+            <td>Payroll automation setup</td>
+            <td class="scope-hrs">4&ndash;6 hrs</td>
+            <td>90% reduction per pay run</td>
+            <td class="scope-hrs">&lt; 2 weeks</td>
+          </tr>
+          <tr>
+            <td>Client meeting prep agent</td>
+            <td class="scope-hrs">4&ndash;6 hrs</td>
+            <td>30&ndash;45 min saved per meeting</td>
+            <td class="scope-hrs">&lt; 1 month</td>
+          </tr>
+          <tr>
+            <td>Tax law change alert system</td>
+            <td class="scope-hrs">3&ndash;5 hrs</td>
+            <td>Proactive client advisory</td>
+            <td class="scope-hrs">Immediate</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5: Trial Seat -->
+  <div class="section">
+    <div class="section-label" id="trial">05 &mdash; Your Trial Seat</div>
+    <h2>Discovery first. <em>Build later.</em></h2>
+    <p>Before we build anything, you get to explore. The trial seat is a guided AI environment built specifically for your firm.</p>
+
+    <div class="trial-card">
+      <h3>What the Trial Seat Is</h3>
+
+      <div class="trial-row">
+        <div class="trial-icon">&#129504;</div>
+        <div>
+          <h4>A thinking partner, not a finished product</h4>
+          <p>Ask it questions about your workflows. Throw problems at it. See how it reasons through accounting challenges, surfaces ideas, and identifies opportunities you might not have considered.</p>
+        </div>
+      </div>
+
+      <div class="trial-row">
+        <div class="trial-icon">&#127919;</div>
+        <div>
+          <h4>Built for your firm specifically</h4>
+          <p>This isn't a generic chatbot. The AI knows about accounting workflows, Canadian tax requirements, and the tools you already use. It's been configured to think about your world.</p>
+        </div>
+      </div>
+
+      <div class="trial-row">
+        <div class="trial-icon">&#128274;</div>
+        <div>
+          <h4>Discovery and brainstorming only</h4>
+          <p>The trial seat won't connect to your live systems or build production integrations. That's the next phase &mdash; when Levi architects and builds things properly, with full oversight and control.</p>
+        </div>
+      </div>
+
+      <div class="trial-row">
+        <div class="trial-icon">&#128197;</div>
+        <div>
+          <h4>Explore at your own pace</h4>
+          <p>No deadlines, no pressure. Use it when you have a spare 10 minutes between clients. Ask it about a workflow that frustrates you. See what it comes back with. The goal is familiarity and ideas &mdash; not output.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 24px;">
+      <div class="trial-card" style="border-left-color: var(--teal);">
+        <h3>What Happens After</h3>
+
+        <div class="trial-row">
+          <div class="trial-icon">1</div>
+          <div>
+            <h4>You explore the trial seat</h4>
+            <p>Get familiar with AI. Ask it things. See what's possible.</p>
+          </div>
+        </div>
+
+        <div class="trial-row">
+          <div class="trial-icon">2</div>
+          <div>
+            <h4>We debrief together</h4>
+            <p>Review what resonated, what surprised you, and where the highest-value opportunities are.</p>
+          </div>
+        </div>
+
+        <div class="trial-row">
+          <div class="trial-icon">3</div>
+          <div>
+            <h4>You choose what to build</h4>
+            <p>Pick the workflows that matter most. Set your hour budget. Levi architects and builds &mdash; real integrations, real agents, real results. You control the scope.</p>
+          </div>
+        </div>
+
+        <div class="trial-row">
+          <div class="trial-icon">4</div>
+          <div>
+            <h4>It compounds</h4>
+            <p>Every automated workflow feeds the next. Structured data from intake becomes the input for reporting, billing, and scheduling. One source of truth &mdash; no re-entry.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer-bar">
+  Upstream Consulting &middot; Levi Dick &middot; <a href="mailto:levi@upstreamconsulting.ca">levi@upstreamconsulting.ca</a> &middot; (604) 866-0020
+</div>
+
+<script>
+  // smooth scroll + active nav highlight
+  document.querySelectorAll('.section-nav a').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const id = link.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        const offset = 110;
+        const top = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // scroll spy
+  const sections = ['discussed','automation','tools','economics','trial'];
+  const navLinks = document.querySelectorAll('.section-nav a');
+  window.addEventListener('scroll', () => {
+    let current = sections[0];
+    for (const id of sections) {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top <= 130) current = id;
+    }
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+</body>
+</html>
