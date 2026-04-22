@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 22 — 35259 Straiton Rd, Abbotsford</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f4;
+    --surface: #ffffff;
+    --text: #1a1a2e;
+    --bright: #0f0f1a;
+    --muted: #6b7280;
+    --hairline: rgba(26, 26, 46, 0.12);
+    --copper: #c47a2e;
+    --gold: #8b6914;
+    --blue: #2563eb;
+    --green: #059669;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Masthead ─────────────────────────────────── */
+  .masthead {
+    padding: 28px 48px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 20px;
+  }
+  .masthead .mark {
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+  }
+  .masthead .meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── Hero / Slideshow ─────────────────────────── */
+  .hero {
+    padding: 64px 48px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .tagline {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 20px;
+  }
+
+  .headline {
+    font-family: var(--serif);
+    font-size: clamp(40px, 6vw, 88px);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--bright);
+    margin-bottom: 20px;
+  }
+  .headline em {
+    font-style: italic;
+    color: var(--copper);
+  }
+
+  .deck {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(18px, 2vw, 24px);
+    color: var(--muted);
+    font-weight: 400;
+    max-width: 680px;
+    margin-bottom: 48px;
+    line-height: 1.4;
+  }
+
+  /* Slideshow */
+  .slideshow {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 40px 80px -30px rgba(26, 26, 46, 0.25);
+    border-radius: 2px;
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+    background-size: cover;
+    background-position: center;
+  }
+  .slide.active { opacity: 1; }
+
+  .slide-caption {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    background: rgba(250, 248, 244, 0.92);
+    backdrop-filter: blur(8px);
+    padding: 10px 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bright);
+    border-left: 2px solid var(--copper);
+  }
+
+  .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(250, 248, 244, 0.85);
+    backdrop-filter: blur(6px);
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bright);
+    transition: all 0.2s;
+    opacity: 0;
+  }
+  .slideshow:hover .nav { opacity: 1; }
+  .nav:hover { background: var(--bg); transform: translateY(-50%) scale(1.08); }
+  .nav.prev { left: 20px; }
+  .nav.next { right: 20px; }
+
+  .dots {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    gap: 8px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(250, 248, 244, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 0;
+  }
+  .dot.active {
+    background: var(--bg);
+    transform: scale(1.3);
+  }
+
+  /* ── Specs strip ──────────────────────────────── */
+  .specs {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 48px 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 40px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .spec {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .spec-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .spec-value {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--bright);
+    line-height: 1;
+  }
+  .spec-value small {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  /* ── About section ────────────────────────────── */
+  section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 96px 48px;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--copper);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 56px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--bright);
+    margin-bottom: 32px;
+    max-width: 800px;
+  }
+
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .about { grid-template-columns: 1fr; gap: 40px; }
+    section { padding: 64px 24px; }
+    .hero { padding: 40px 24px; }
+    .masthead { padding: 20px 24px 16px; flex-direction: column; gap: 8px; align-items: flex-start; }
+    .specs { padding: 48px 24px 32px; gap: 28px; }
+  }
+
+  .prose p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+  .prose p:first-of-type::first-letter {
+    font-family: var(--serif);
+    font-size: 64px;
+    float: left;
+    line-height: 0.9;
+    margin: 6px 10px -4px 0;
+    color: var(--copper);
+    font-weight: 500;
+  }
+
+  .features {
+    list-style: none;
+    display: grid;
+    gap: 18px;
+  }
+  .features li {
+    display: flex;
+    gap: 16px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .features li:last-child { border-bottom: none; }
+  .feature-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--copper);
+    flex-shrink: 0;
+    width: 28px;
+    padding-top: 4px;
+  }
+  .feature-text strong {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--bright);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .feature-text span {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  /* ── Address card ─────────────────────────────── */
+  .address-section {
+    background: var(--surface);
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .address {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 96px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  @media (max-width: 860px) {
+    .address { grid-template-columns: 1fr; gap: 40px; padding: 64px 24px; }
+  }
+
+  .address-block {
+    font-family: var(--serif);
+    font-size: 38px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--bright);
+    margin-bottom: 20px;
+    letter-spacing: -0.015em;
+  }
+  .address-block .unit {
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--copper);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .neighborhood {
+    font-style: italic;
+    font-family: var(--serif);
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .map-wrap {
+    aspect-ratio: 4/3;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--hairline);
+    border-radius: 2px;
+    background: var(--bg);
+  }
+  .map-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    filter: grayscale(25%) contrast(0.95);
+  }
+  /* Linen / cream overlay to blend map into editorial palette */
+  .map-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(250, 248, 244, 0.42);
+    pointer-events: none;
+    mix-blend-mode: multiply;
+  }
+  .map-label {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(250, 248, 244, 0.95);
+    backdrop-filter: blur(6px);
+    padding: 8px 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--bright);
+    border-left: 2px solid var(--copper);
+    z-index: 2;
+  }
+
+  /* ── Contact form ───────────────────────────── */
+  .contact-form {
+    max-width: 560px;
+    margin: 48px auto 0;
+    text-align: left;
+    display: grid;
+    gap: 18px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .field input,
+  .field textarea,
+  .field select {
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--bright);
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    padding: 12px 14px;
+    border-radius: 2px;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    outline: none;
+    border-color: var(--copper);
+  }
+  .field textarea { resize: vertical; min-height: 90px; }
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 560px) {
+    .field-row { grid-template-columns: 1fr; }
+  }
+  .submit-btn {
+    background: var(--bright);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.25s;
+    margin-top: 8px;
+    justify-self: center;
+  }
+  .submit-btn:hover {
+    background: var(--copper);
+    transform: translateY(-1px);
+  }
+  .form-note {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 8px;
+  }
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 32px;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--bright);
+    font-size: 20px;
+  }
+  .form-success.show { display: block; }
+  .form-success.show + form { display: none; }
+
+  /* ── Contact ─────────────────────────────────── */
+  .contact {
+    text-align: center;
+    padding: 120px 48px;
+  }
+  .contact-title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--bright);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .contact-info {
+    font-size: 17px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .contact-info strong {
+    color: var(--bright);
+    font-weight: 500;
+  }
+  .contact-price {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: 500;
+    color: var(--copper);
+    margin: 40px 0 8px;
+    letter-spacing: -0.02em;
+  }
+  .contact-price small {
+    font-size: 18px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* ── Footer ─────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  @media (max-width: 600px) {
+    footer { padding: 24px; }
+  }
+
+  .hr-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 0 auto 16px;
+    color: var(--copper);
+    font-family: var(--serif);
+    max-width: 400px;
+  }
+  .hr-ornament::before,
+  .hr-ornament::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--hairline);
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="mark">Upper Ten Oaks</div>
+  <div class="meta">Abbotsford · British Columbia · MMXXVI</div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="tagline">For Rent · Available Immediately</div>
+  <h1 class="headline">A bright <em>basement suite</em><br>that doesn't feel like one.</h1>
+  <p class="deck">Above-ground with its own French-door entry, a stone gas fireplace, and a real kitchen — tucked into quiet Upper Ten Oaks.</p>
+
+  <div class="slideshow" id="slideshow">
+    <div class="slide active" style="background-image: url('photos/6.jpg');">
+      <div class="slide-caption">Living Room · Stone Gas Fireplace</div>
+    </div>
+    <div class="slide" style="background-image: url('photos/5.jpg');">
+      <div class="slide-caption">Kitchen · Quartz Island + Live-Edge Counters</div>
+    </div>
+    <div class="slide" style="background-image: url('photos/7.jpg');">
+      <div class="slide-caption">Private French-Door Entry</div>
+    </div>
+    <div class="slide" style="background-image: url('photos/4.jpg');">
+      <div class="slide-caption">Kitchen Detail · Stainless Appliances</div>
+    </div>
+    <div class="slide" style="background-image: url('photos/1.jpg');">
+      <div class="slide-caption">Bedroom · Double Closets</div>
+    </div>
+    <div class="slide" style="background-image: url('photos/3.jpg');">
+      <div class="slide-caption">Bathroom · Walk-In Glass Shower</div>
+    </div>
+    <div class="slide" style="background-image: url('photos/2.jpg');">
+      <div class="slide-caption">In-Suite Stacked Laundry</div>
+    </div>
+    <div class="slide" style="background-image: url('photos/8.jpg');">
+      <div class="slide-caption">Separate Pantry Storage</div>
+    </div>
+
+    <button class="nav prev" aria-label="Previous">‹</button>
+    <button class="nav next" aria-label="Next">›</button>
+
+    <div class="dots" id="dots"></div>
+  </div>
+</section>
+
+<!-- SPECS -->
+<div class="specs">
+  <div class="spec">
+    <span class="spec-label">Rent</span>
+    <span class="spec-value">$1,800<small>/mo</small></span>
+  </div>
+  <div class="spec">
+    <span class="spec-label">Bedroom</span>
+    <span class="spec-value">1</span>
+  </div>
+  <div class="spec">
+    <span class="spec-label">Bathroom</span>
+    <span class="spec-value">1</span>
+  </div>
+  <div class="spec">
+    <span class="spec-label">Square Feet</span>
+    <span class="spec-value">725</span>
+  </div>
+  <div class="spec">
+    <span class="spec-label">Parking</span>
+    <span class="spec-value">1<small> spot</small></span>
+  </div>
+  <div class="spec">
+    <span class="spec-label">Available</span>
+    <span class="spec-value" style="font-size: 22px;">Now</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section>
+  <div class="section-label">About the Suite</div>
+  <h2 class="section-title">Warm, considered, and built to actually live in.</h2>
+
+  <div class="about">
+    <div class="prose">
+      <p>This is an above-ground one-bedroom that's easy to mistake for a standalone cottage. The private French-door entry opens to a living room anchored by a stone gas fireplace with a reclaimed wood mantle — the kind of space that earns its warmth.</p>
+      <p>The kitchen is unusually generous for a suite this size: live-edge wood counters on one side, a quartz-topped island on the other, and a full stainless appliance package including a real dishwasher. Storage is built in — double closets in the bedroom, a linen tower in the bathroom, and a separate pantry room off the kitchen.</p>
+      <p>In-suite stacked laundry means no shared machines. A walk-in glass shower keeps the bathroom feeling modern rather than improvised. Hydro, water, and heat are included — tenant only arranges internet.</p>
+    </div>
+
+    <ol class="features">
+      <li>
+        <span class="feature-num">01</span>
+        <div class="feature-text">
+          <strong>Stone Gas Fireplace</strong>
+          <span>Reclaimed wood mantle, true heat source</span>
+        </div>
+      </li>
+      <li>
+        <span class="feature-num">02</span>
+        <div class="feature-text">
+          <strong>Live-Edge Kitchen</strong>
+          <span>Quartz island + stainless appliance package</span>
+        </div>
+      </li>
+      <li>
+        <span class="feature-num">03</span>
+        <div class="feature-text">
+          <strong>Private French-Door Entry</strong>
+          <span>Above-ground with direct outdoor access</span>
+        </div>
+      </li>
+      <li>
+        <span class="feature-num">04</span>
+        <div class="feature-text">
+          <strong>In-Suite Laundry</strong>
+          <span>Stacked washer/dryer in dedicated cabinet</span>
+        </div>
+      </li>
+      <li>
+        <span class="feature-num">05</span>
+        <div class="feature-text">
+          <strong>Private Patio</strong>
+          <span>Outdoor space just for you</span>
+        </div>
+      </li>
+      <li>
+        <span class="feature-num">06</span>
+        <div class="feature-text">
+          <strong>Utilities Included</strong>
+          <span>Hydro, water, heat — internet is the only bill</span>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ADDRESS -->
+<div class="address-section">
+  <div class="address">
+    <div>
+      <div class="section-label">The Neighborhood</div>
+      <div class="address-block">
+        <span class="unit">Unit 22</span>
+        35259 Straiton Road<br>
+        Abbotsford, BC<br>
+        <span style="font-size: 22px; color: var(--muted); font-weight: 400;">V2S 0H1</span>
+      </div>
+      <p class="neighborhood">Upper Ten Oaks is a quiet, family-oriented pocket just off Clayburn Village — a short drive to Highway 11, Christian Life Community Church, and Abbotsford's east-side amenities. The kind of street where people wave.</p>
+    </div>
+
+    <div class="map-wrap">
+      <iframe
+        src="https://maps.google.com/maps?q=49.083028,-122.250696&z=15&output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Suite location"></iframe>
+      <div class="map-label">49.0830° N · 122.2507° W</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact">
+  <div class="hr-ornament">✦</div>
+  <h2 class="contact-title">Interested?</h2>
+  <p class="contact-info">Tell us a bit about yourself and the landlords will be in touch.</p>
+
+  <div class="contact-price">$1,800<small> / month</small></div>
+  <p class="contact-info" style="font-size: 13px; margin-bottom: 24px;">Evening showings · No pets · No smoking · Max 2 adults</p>
+
+  <div class="form-success" id="formSuccess">
+    Thank you — your message has been sent. The landlords will be in touch soon.
+  </div>
+
+  <form class="contact-form" id="inquiryForm"
+        action="https://formsubmit.co/d.mspenst@gmail.com"
+        method="POST">
+    <!-- FormSubmit config (hidden) -->
+    <input type="hidden" name="_subject" value="New Inquiry — Unit 22 Straiton Rd Suite">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_next" value="#formSuccess">
+    <input type="text" name="_honey" style="display:none">
+
+    <div class="field-row">
+      <div class="field">
+        <label for="f-name">Full Name</label>
+        <input id="f-name" type="text" name="Full Name" required>
+      </div>
+      <div class="field">
+        <label for="f-phone">Phone</label>
+        <input id="f-phone" type="tel" name="Phone" required>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="f-email">Email</label>
+      <input id="f-email" type="email" name="Email" required>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="f-people"># of Occupants</label>
+        <input id="f-people" type="text" name="Occupants" placeholder="e.g. 2 adults" required>
+      </div>
+      <div class="field">
+        <label for="f-movein">Ideal Move-In</label>
+        <input id="f-movein" type="text" name="Move-In Date" placeholder="e.g. June 1" required>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="f-employ">Employment</label>
+      <input id="f-employ" type="text" name="Employment" placeholder="Role + employer for each adult" required>
+    </div>
+
+    <div class="field">
+      <label for="f-about">A Brief Intro</label>
+      <textarea id="f-about" name="About" placeholder="Tell the landlords a bit about yourself and why the suite is a fit." required></textarea>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="f-pets">Any Pets?</label>
+        <select id="f-pets" name="Pets" required>
+          <option value="">Select…</option>
+          <option value="No">No</option>
+          <option value="Yes">Yes (note: suite is no-pets)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-smoke">Smoker / Vaper?</label>
+        <select id="f-smoke" name="Smoker" required>
+          <option value="">Select…</option>
+          <option value="No">No</option>
+          <option value="Yes">Yes (note: suite is smoke-free)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="submit-btn" type="submit">Send Inquiry</button>
+    <p class="form-note">We read every message and reply within a day or two.</p>
+  </form>
+</section>
+
+<footer>
+  <div>Unit 22 · 35259 Straiton Rd · Abbotsford BC</div>
+  <div>Listed MMXXVI</div>
+</footer>
+
+<script>
+  // AJAX form submit to keep user on page + show thank-you message
+  const form = document.getElementById('inquiryForm');
+  const success = document.getElementById('formSuccess');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          success.classList.add('show');
+          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          alert('Something went wrong — please try again in a moment.');
+        }
+      } catch (err) {
+        alert('Network error — please try again in a moment.');
+      }
+    });
+  }
+
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('dots');
+  let current = 0;
+  let interval;
+
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'dot' + (i === 0 ? ' active' : '');
+    b.addEventListener('click', () => go(i));
+    dotsContainer.appendChild(b);
+  });
+  const dots = document.querySelectorAll('.dot');
+
+  function go(i) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (i + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    reset();
+  }
+
+  function next() { go(current + 1); }
+  function prev() { go(current - 1); }
+
+  function reset() {
+    clearInterval(interval);
+    interval = setInterval(next, 5000);
+  }
+
+  document.querySelector('.nav.next').addEventListener('click', next);
+  document.querySelector('.nav.prev').addEventListener('click', prev);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+
+  reset();
+</script>
+
+</body>
+</html>
