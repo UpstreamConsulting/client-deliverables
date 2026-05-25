@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Intro Session — Regehr Excavating</title>
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Gotu&family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg:                   #F2EEE8;
+  --bg-raised:            #ece5d8;
+  --surface:              #ffffff;
+  --fg-1:                 #1d1d1f;
+  --fg-2:                 #3D3D3D;
+  --fg-muted:             #7b746b;
+  --fg-on-accent:         #ffffff;
+  --border:               #e5dccf;
+  --accent-primary:       #A57663;
+  --accent-secondary:     #D8A36B;
+  --accent-4:             #5b7a5e;
+  --primary-a10:          #f5ece6;
+  --neutral-inverse:      #3D3D3D;
+  --shadow-card:          0 2px 12px rgba(61,61,61,0.06);
+  --font-heading:         'Aboreto', Georgia, serif;
+  --font-body:            'Gotu', 'Inter', system-ui, sans-serif;
+  --font-button:          'Syne', 'Inter', system-ui, sans-serif;
+  --max-width:            680px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--fg-1);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.8;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--neutral-inverse);
+  padding: 40px 48px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(165,118,99,0.20) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.header-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-secondary);
+  margin-bottom: 10px;
+  position: relative;
+}
+.header h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 400;
+  color: var(--fg-on-accent);
+  line-height: 1.15;
+  margin-bottom: 14px;
+  position: relative;
+}
+.header-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  position: relative;
+}
+.header-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.header-meta-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242,238,232,0.45);
+}
+.header-meta-value {
+  font-size: 13px;
+  color: rgba(242,238,232,0.85);
+  font-family: var(--font-body);
+}
+
+/* ── CONTENT ── */
+.content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 48px 32px 64px;
+}
+
+/* ── INTRO ── */
+.intro {
+  font-size: 15px;
+  color: var(--fg-2);
+  line-height: 1.8;
+  margin-bottom: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── AGENDA BLOCKS ── */
+.agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.agenda-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow-card);
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.agenda-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 2px;
+}
+.agenda-time-value {
+  font-family: var(--font-button);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.agenda-time-label {
+  font-size: 10px;
+  color: var(--fg-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.agenda-time-bar {
+  width: 2px;
+  height: 20px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 6px auto 0;
+}
+
+.agenda-body {}
+.agenda-title {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--fg-1);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+.agenda-desc {
+  font-size: 13px;
+  color: var(--fg-muted);
+  line-height: 1.7;
+}
+.agenda-desc ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 6px;
+}
+.agenda-desc ul li {
+  padding-left: 14px;
+  position: relative;
+  margin-bottom: 3px;
+}
+.agenda-desc ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--accent-secondary);
+  font-size: 11px;
+  top: 2px;
+}
+
+/* ── PREP SECTION ── */
+.prep-section {
+  background: var(--primary-a10);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-bottom: 40px;
+}
+.prep-section h2 {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--fg-1);
+  letter-spacing: 0.03em;
+  margin-bottom: 14px;
+}
+.prep-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.prep-list li {
+  font-size: 13px;
+  color: var(--fg-2);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  line-height: 1.6;
+}
+.prep-check {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--accent-primary);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── NOTE ── */
+.note {
+  font-size: 13px;
+  color: var(--fg-muted);
+  line-height: 1.7;
+  text-align: center;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.note a {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+/* ── FOOTER ── */
+.footer {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 32px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.footer-brand {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--fg-muted);
+  letter-spacing: 0.04em;
+}
+.footer-note {
+  font-size: 11px;
+  color: var(--fg-muted);
+}
+
+/* ── PRINT ── */
+@media print {
+  body { background: #fff; font-size: 12px; }
+  .header { background: #3D3D3D !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .agenda-item, .prep-section { box-shadow: none; }
+}
+
+@media (max-width: 540px) {
+  .header { padding: 28px 24px; }
+  .content { padding: 32px 20px 48px; }
+  .agenda-item { grid-template-columns: 1fr; gap: 8px; }
+  .agenda-time { flex-direction: row; gap: 8px; align-items: center; }
+  .agenda-time-bar { display: none; }
+  .footer { padding: 0 20px 32px; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">Upstream Consulting</div>
+  <h1>AI Intro Session</h1>
+  <div class="header-meta">
+    <div class="header-meta-item">
+      <span class="header-meta-label">Date</span>
+      <span class="header-meta-value">Monday, May 25, 2026</span>
+    </div>
+    <div class="header-meta-item">
+      <span class="header-meta-label">Time</span>
+      <span class="header-meta-value">12:00 – 2:00 PM Pacific</span>
+    </div>
+    <div class="header-meta-item">
+      <span class="header-meta-label">Format</span>
+      <span class="header-meta-value">Microsoft Teams</span>
+    </div>
+    <div class="header-meta-item">
+      <span class="header-meta-label">Attendees</span>
+      <span class="header-meta-value">Levi Dick · Connor Reid</span>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- PAYMENT CTA -->
+  <div style="background:var(--surface);border:1.5px solid var(--accent-secondary);border-radius:12px;padding:18px 24px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent-primary);margin-bottom:4px;">Session Fee — $200 CAD</div>
+      <div style="font-size:13px;color:var(--fg-muted);line-height:1.5;">Complete payment to confirm your spot for the full 2-hour session.</div>
+    </div>
+    <a href="https://book.stripe.com/aFacN64N3alf1or2Mt9MY01"
+       style="display:inline-block;background:var(--accent-primary);color:var(--fg-on-accent);font-family:'Syne','Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;padding:10px 22px;border-radius:8px;white-space:nowrap;">
+      Pay Now →
+    </a>
+  </div>
+
+  <p class="intro">
+    Two hours. No slides, no pitch. We start by showing you exactly what's possible for your operation — then we pick one thing and build it live before we're done.
+  </p>
+
+  <!-- AGENDA -->
+  <div class="agenda">
+
+    <div class="agenda-item" style="border-left: 3px solid var(--accent-primary);">
+      <div class="agenda-time">
+        <span class="agenda-time-value">0:00</span>
+        <span class="agenda-time-label">30 min</span>
+        <div class="agenda-time-bar"></div>
+      </div>
+      <div class="agenda-body">
+        <div class="agenda-title">What AI Could Do For Regehr</div>
+        <div class="agenda-desc">
+          We'll walk through three specific builds tailored to what you told us — live demos of what each one looks like, how it works, and what it would change day-to-day.
+          <ul>
+            <li><strong>SharePoint search</strong> — ask plain questions, get answers from your own files</li>
+            <li><strong>PO intake form</strong> — structured subcontractor and materials requests, no chasing</li>
+            <li><strong>HeavyJob cost summary</strong> — field cost data turned into a readable financial snapshot</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">
+        <span class="agenda-time-value">0:30</span>
+        <span class="agenda-time-label">30 min</span>
+        <div class="agenda-time-bar"></div>
+      </div>
+      <div class="agenda-body">
+        <div class="agenda-title">Your Stack &amp; Current State</div>
+        <div class="agenda-desc">
+          Walk through how HeavyJob, Spectrum, and SharePoint are actually being used today — where information moves and where it gets stuck.
+          <ul>
+            <li>The HeavyJob → Spectrum reporting gap</li>
+            <li>What lives on SharePoint and how the team finds it</li>
+            <li>Pick which build we're doing in the second half</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">
+        <span class="agenda-time-value">1:00</span>
+        <span class="agenda-time-label">45 min</span>
+        <div class="agenda-time-bar"></div>
+      </div>
+      <div class="agenda-body">
+        <div class="agenda-title">Build It Live</div>
+        <div class="agenda-desc">
+          We build the chosen tool together, in your environment, in real time. You'll see exactly how it works and leave knowing how to use it. No black box.
+        </div>
+      </div>
+    </div>
+
+    <div class="agenda-item">
+      <div class="agenda-time">
+        <span class="agenda-time-value">1:45</span>
+        <span class="agenda-time-label">15 min</span>
+      </div>
+      <div class="agenda-body">
+        <div class="agenda-title">Wrap &amp; What's Next</div>
+        <div class="agenda-desc">
+          Review what we built and how to use it. Clear path for what comes next if you want to keep moving.
+          <ul>
+            <li>Deliverables sent within 48 hours</li>
+            <li>Prioritized next steps documented</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COME PREPARED -->
+  <div class="prep-section">
+    <h2>Come prepared with</h2>
+    <ul class="prep-list">
+      <li>
+        <div class="prep-check"></div>
+        <span>Access to HeavyJob and Spectrum open in your browser</span>
+      </li>
+      <li>
+        <div class="prep-check"></div>
+        <span>A real example of the reporting gap — a job where cost data didn't flow through correctly</span>
+      </li>
+      <li>
+        <div class="prep-check"></div>
+        <span>Your SharePoint site URL, if you'd like to explore the search angle</span>
+      </li>
+      <li>
+        <div class="prep-check"></div>
+        <span>A sample PO or subcontractor agreement if available</span>
+      </li>
+      <li>
+        <div class="prep-check"></div>
+        <span>Your Claude plan info (Personal Pro, or company account?)</span>
+      </li>
+    </ul>
+  </div>
+
+  <p class="note">
+    Questions before Monday? Reach out any time at
+    <a href="mailto:levi@upstreamconsulting.ca">levi@upstreamconsulting.ca</a>
+  </p>
+
+</div>
+
+<div class="footer">
+  <span class="footer-brand">Upstream Consulting</span>
+  <span class="footer-note">upstreamconsulting.ca</span>
+</div>
+
+</body>
+</html>
