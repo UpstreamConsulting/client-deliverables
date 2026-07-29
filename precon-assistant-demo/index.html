@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Preconstruction Assistant — Demo</title>
+<style>
+  :root { --cream:#F4EEE4; --charcoal:#1D1D1F; --clay:#A57663; --terra:#B04A37; --border:#E5DCCF; --muted:#6B6258; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--cream); color:var(--charcoal); font-family:Georgia,'Gotu',serif; line-height:1.55; }
+  .wrap { max-width:720px; margin:0 auto; padding:56px 24px 72px; }
+  .eyebrow { text-transform:uppercase; letter-spacing:.14em; font-size:12px; color:var(--clay); font-family:Calibri,Arial,sans-serif; font-weight:700; }
+  h1 { font-family:'Aboreto',Georgia,serif; font-weight:400; font-size:38px; line-height:1.1; margin:.3em 0 .2em; }
+  .lede { color:var(--muted); font-size:17px; max-width:56ch; }
+  .cards { display:grid; gap:16px; margin-top:36px; }
+  a.card { display:block; text-decoration:none; color:inherit; background:#fff; border:1px solid var(--border); border-radius:14px; padding:22px 24px; transition:box-shadow .15s, transform .15s; }
+  a.card:hover { box-shadow:0 10px 28px rgba(29,29,31,.08); transform:translateY(-1px); }
+  a.card .k { font-family:'Aboreto',Georgia,serif; font-size:21px; }
+  a.card .d { color:var(--muted); font-size:15px; margin-top:4px; }
+  a.card .go { color:var(--terra); font-size:14px; font-family:Calibri,Arial,sans-serif; font-weight:700; margin-top:10px; display:inline-block; }
+  footer { margin-top:48px; padding-top:20px; border-top:1px solid var(--border); color:var(--muted); font-size:13px; font-family:Calibri,Arial,sans-serif; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">Upstream Consulting · Preconstruction Assistant</div>
+    <h1>See it in action</h1>
+    <p class="lede">A demonstration of the preconstruction assistant, run end-to-end on a real bid package. Two short views — how it works, and the review report it produces.</p>
+    <div class="cards">
+      <a class="card" href="walkthrough.html">
+        <div class="k">Test-run walkthrough</div>
+        <div class="d">A plain-language, step-by-step look at what the assistant did on a real package — and what it produced at each step.</div>
+        <div class="go">Open the walkthrough →</div>
+      </a>
+      <a class="card" href="review-report.html">
+        <div class="k">Preconstruction review report</div>
+        <div class="d">The estimator-facing report it hands over: package summary, scope list, ranked findings, and a pricing-request plan — in one place to review and track.</div>
+        <div class="go">Open the review report →</div>
+      </a>
+    </div>
+    <footer>Upstream Consulting · a demonstration · sample data only</footer>
+  </div>
+</body>
+</html>
