@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Legacy BidConnect: Setup</title>
-<meta name="description" content="How Legacy BidConnect connects, the six accounts Peter sets up in order, and what each one costs.">
+<meta name="description" content="How Legacy BidConnect connects, the seven accounts Peter sets up in order, and what each one costs.">
 <link rel="canonical" href="https://upstreamconsulting.github.io/client-deliverables/legacy-windows/bidconnect-setup/index.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
@@ -138,7 +138,7 @@ footer .wm{font-family:Aboreto,Georgia,serif;letter-spacing:.12em;text-transform
 <body>
 <header>
   <h1>Legacy BidConnect: how it all connects</h1>
-  <p>Click any box to see what it does, where it stands today, and where it's going. Solid lines exist today; dashed lines are planned. Below the map: the six things Peter sets up, in order, and what each one costs.</p>
+  <p>Click any box to see what it does, where it stands today, and where it's going. Solid lines exist today; dashed lines are planned. Below the map: the seven things Peter sets up, in order, and what each one costs.</p>
   <div class="legend">
     <span><i class="dot" style="background:var(--live)"></i>Working</span>
     <span><i class="dot" style="background:var(--fix)"></i>Working, needs upgrade</span>
@@ -193,13 +193,13 @@ footer .wm{font-family:Aboreto,Georgia,serif;letter-spacing:.12em;text-transform
     <p class="hint">Every account is created with a Legacy business email and paid on a Legacy card, then Levi is invited in. No shared logins.</p>
     <p class="intro">Each step has links to the exact pages, and two prompts. Copy the Claude in Chrome prompt if you want Claude to walk you through it on screen; copy the Claude Code prompt if you want it done from your PC. Tick Done when the item at the bottom of the card has been sent to Levi.</p>
     <p class="note" style="margin:0 0 12px">Prices are USD per month, checked 2026-09-28.</p>
-    <div class="progress"><b id="progress-text">0 of 6 done</b><div class="bar"><i id="progress-bar"></i></div></div>
+    <div class="progress"><b id="progress-text">0 of 7 done</b><div class="bar"><i id="progress-bar"></i></div></div>
     <ol class="steps" id="steps">
 
       <li data-step="1">
         <div class="head"><b>GitHub organization</b><span class="plan">Team plan, $4 per person</span></div>
         <label class="donebox"><input type="checkbox" data-done="1">Done</label>
-        <span class="do">Create a Legacy organization, transfer the repo in, invite Levi. Start on Team.</span>
+        <span class="do">Create a Legacy organization, transfer the repo in, invite Levi as a second Owner. Start on Team.</span>
         <span><b>What you get:</b> the code belongs to the company, not a person. Team adds branch rules and required reviewers, so nothing reaches the live app until a second person has looked at it.</span>
         <span><b>Cost grows by:</b> $4 for each extra person. Two or three people means $8 to $12.</span>
         <div class="open"><b>Open:</b>
@@ -240,7 +240,7 @@ footer .wm{font-family:Aboreto,Georgia,serif;letter-spacing:.12em;text-transform
       <li data-step="3">
         <div class="head"><b>Supabase</b><span class="plan">Pro, $25</span></div>
         <label class="donebox"><input type="checkbox" data-done="3">Done</label>
-        <span class="do">Upgrade the existing organization to Pro, invite Levi. No migration needed.</span>
+        <span class="do">Upgrade the existing organization to Pro, invite Levi as Administrator. No migration needed.</span>
         <span><b>What you get:</b> the database and file store stop pausing when idle, get a daily backup kept for 7 days, and 8 GB of database plus 100 GB of files. The spend cap is on by default, so the bill cannot run away.</span>
         <span><b>Cost grows by:</b> nothing per person; members are unlimited and free. A separate dev copy for testing changes adds about $10.</span>
         <div class="open"><b>Open:</b>
@@ -277,7 +277,7 @@ footer .wm{font-family:Aboreto,Georgia,serif;letter-spacing:.12em;text-transform
       <li data-step="5">
         <div class="head"><b>Microsoft Graph access</b><span class="plan">Included with Microsoft 365</span></div>
         <label class="donebox"><input type="checkbox" data-done="5">Done</label>
-        <span class="do">Parked until after launch. When it is time, Legacy's Microsoft 365 admin approves one app registration.</span>
+        <span class="do">Parked until after launch. When it is time, Levi builds the connection and Legacy's Global Administrator clicks one Grant admin consent button. Microsoft does not let that click be delegated to Levi.</span>
         <span><b>What you get:</b> the app can copy files to SharePoint nightly and, later, send email from a Legacy mailbox.</span>
         <div class="open"><b>Open:</b>
           <a href="https://entra.microsoft.com" target="_blank" rel="noopener">Microsoft Entra admin centre</a> <em>(nothing to do here yet; only confirm who the admin is)</em>
@@ -294,10 +294,10 @@ footer .wm{font-family:Aboreto,Georgia,serif;letter-spacing:.12em;text-transform
       <li data-step="6">
         <div class="head"><b>Microsoft sign-in (SSO)</b><span class="plan">Included with Microsoft 365</span></div>
         <label class="donebox"><input type="checkbox" data-done="6">Done</label>
-        <span class="do">Tell Levi who the Microsoft 365 admin is. Levi registers the app and switches sign-in to Microsoft, limited to Legacy accounts.</span>
-        <span><b>What you get:</b> one login for everyone, Authenticator for MFA, and offboarding is disabling one account. Field crew get a free account in the directory; a paid licence is only needed for email, Teams or Office. Test one field account first.</span>
+        <span class="do">Invite Levi into Legacy's Microsoft Entra as a guest and give him the Application Administrator role. Levi has no way into your Microsoft 365 until you do this. He then registers the app and switches sign-in to Microsoft, limited to Legacy accounts.</span>
+        <span><b>What you get:</b> one login for everyone, Authenticator for MFA, and offboarding is disabling one account. Field crew get a free account in the directory; a paid licence is only needed for email, Teams or Office. One catch: an unlicensed user cannot reset a forgotten password themselves, so you reset it from the admin centre. Test one field account first.</span>
         <div class="open"><b>Open:</b>
-          <a href="https://entra.microsoft.com" target="_blank" rel="noopener">Microsoft Entra admin centre</a> <em>(App registrations; Levi does the registration)</em> &middot;
+          <a href="https://entra.microsoft.com" target="_blank" rel="noopener">Microsoft Entra admin centre</a> <em>(Users > New user > Invite external user; then Roles &amp; admins > Application Administrator > Add assignment)</em> &middot;
           <a href="https://admin.microsoft.com/#/users" target="_blank" rel="noopener">Microsoft 365 users</a> <em>(add a test field user with no licence)</em> &middot;
           <a href="https://supabase.com/dashboard/project/_/auth/providers" target="_blank" rel="noopener">Supabase sign-in providers</a> <em>(where Levi switches on Microsoft)</em>
         </div>
@@ -307,11 +307,32 @@ footer .wm{font-family:Aboreto,Georgia,serif;letter-spacing:.12em;text-transform
         </div>
         <details><summary>Read the Claude in Chrome prompt</summary><pre id="p-6-chrome"></pre></details>
         <details><summary>Read the Claude Code prompt</summary><pre id="p-6-code"></pre></details>
-        <div class="send"><b>Send Levi:</b> the admin's name and one test field account username.</div>
+        <div class="send"><b>Send Levi:</b> confirmation that the Entra guest invite went out, and one test field account username.</div>
+      </li>
+
+      <li data-step="7">
+        <div class="head"><b>Anthropic key (quote reading)</b><span class="plan">Pay per use, capped</span></div>
+        <label class="donebox"><input type="checkbox" data-done="7">Done</label>
+        <span class="do">Create an Anthropic Console organization under a Legacy email, add credit, set a monthly spend limit, invite Levi, and paste a fresh key into Vercel. Quote reading is down today because the free credit ran out.</span>
+        <span><b>What you get:</b> uploaded supplier quotes come back as line items again. The spend limit is the whole bill; nothing else on this service costs money.</span>
+        <span><b>Cost grows by:</b> use only, about $0.30 to $0.40 per quote today and less once the free parsers handle the common suppliers. Members are free.</span>
+        <div class="open"><b>Open:</b>
+          <a href="https://console.anthropic.com/settings/billing" target="_blank" rel="noopener">Billing</a> <em>(add credit)</em> &middot;
+          <a href="https://console.anthropic.com/settings/limits" target="_blank" rel="noopener">Limits</a> <em>(monthly spend limit)</em> &middot;
+          <a href="https://console.anthropic.com/settings/members" target="_blank" rel="noopener">Members</a> <em>(invite Levi)</em> &middot;
+          <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">API keys</a> <em>(new key, then paste into Vercel)</em>
+        </div>
+        <div class="prompts">
+          <button class="btn" data-copy="7-chrome">Copy prompt for Claude in Chrome</button>
+          <button class="btn" data-copy="7-code">Copy prompt for Claude Code</button>
+        </div>
+        <details><summary>Read the Claude in Chrome prompt</summary><pre id="p-7-chrome"></pre></details>
+        <details><summary>Read the Claude Code prompt</summary><pre id="p-7-code"></pre></details>
+        <div class="send"><b>Send Levi:</b> confirmation that the Anthropic invite went out, and the spend limit you chose. Never send the key itself.</div>
       </li>
 
     </ol>
-    <div class="rule"><b>Once these are done, lock it down:</b> turn off open sign-ups, 2FA on every admin account, rotate the tokens on Peter's PC, and put a spend cap on the Anthropic key.</div>
+    <div class="rule"><b>Once these are done, lock it down:</b> turn off open sign-ups, 2FA on every admin account, rotate the tokens on Peter's PC, and delete the old Anthropic key.</div>
   </div>
   <div class="panel">
     <h2>Monthly cost once it is all set up</h2>
@@ -419,14 +440,14 @@ const P={
   "Open https://github.com/organizations/plan. If I am not signed in, sign in with my Legacy business email (if I have no GitHub account on that email, create one first).",
   "Choose the Team plan. Name the organization (for example legacy-windows-doors), use my Legacy email as the contact, and choose the business option. Stop at the payment screen and show me the total before I pay on the Legacy card. Compare it with https://github.com/pricing.",
   "Open https://github.com/settings/repositories and open the legacy-estimator repository. If it is not there, tell me: the code may not be on GitHub yet, and I will use the Claude Code prompt instead. Otherwise go to Settings, scroll to Danger Zone, choose Transfer ownership and type the new organization name. Show me the confirmation before clicking.",
-  "Open https://github.com/orgs/ORG/people, replacing ORG with the organization name from step 2. Click Invite member, enter levi@upstreamconsulting.ca, role Member. Stop and show me before sending.",
+  "Open https://github.com/orgs/ORG/people, replacing ORG with the organization name from step 2. Click Invite member, enter levi@upstreamconsulting.ca, role Owner (you stay Owner too; Owner is what lets Levi set the branch rules and reviewers). Stop and show me before sending.",
   "Confirm the repository now sits under the organization, not under my personal account."
  ],"the organization name"),
  "1-code":code(1,"get the legacy-estimator code into a GitHub organization owned by Legacy on the Team plan, with Levi invited",[
   "If the code is not in Git yet: run `git -C C:\\dev\\legacy-estimator status`; if needed initialise the repo, add a .gitignore that excludes .env files, node_modules and .vercel, and show me `git status` so I can confirm no secret file is staged.",
   "Create the organization in my browser at https://github.com/organizations/plan (Team plan, Legacy email, Legacy card). Ask me before paying.",
   "Put the repository in the organization: `gh repo create ORG/legacy-estimator --private --source . --push` if it is new, or Settings > Danger Zone > Transfer ownership on GitHub if it already exists under my personal account. ORG is the organization name from step 2.",
-  "Invite levi@upstreamconsulting.ca as a Member at https://github.com/orgs/ORG/people. Ask me before sending.",
+  "Invite levi@upstreamconsulting.ca as an Owner at https://github.com/orgs/ORG/people (you stay Owner too; Owner is what lets Levi set the branch rules). Ask me before sending.",
   "Confirm `git remote -v` points at the organization and that `git push` works."
  ],"the organization name"),
  "2-chrome":chrome(2,"create a Vercel Pro team owned by Legacy, move the legacy-estimator project into it, invite Levi, and confirm it deploys from GitHub automatically",[
@@ -446,13 +467,13 @@ const P={
  "3-chrome":chrome(3,"upgrade the Supabase organization that holds the BidConnect project to Pro and invite Levi",[
   "Open https://supabase.com/dashboard/org, signed in with my Legacy email, and pick the organization that contains the BidConnect (legacy-estimator) project.",
   "Go to Billing and change the plan to Pro ($25, check https://supabase.com/pricing). Confirm the spend cap is switched on. Stop at the payment screen and show me the total.",
-  "Go to Team > Invite, enter levi@upstreamconsulting.ca with the Developer role. Stop and show me before sending.",
+  "Go to Team > Invite, enter levi@upstreamconsulting.ca with the Administrator role (he needs it to create the dev copy and change sign-in settings). Stop and show me before sending.",
   "Open the project and confirm it is no longer paused and shows the Pro plan."
  ],"confirmation that the Supabase invite to Levi went out"),
  "3-code":code(3,"upgrade the Supabase organization behind BidConnect to Pro and invite Levi",[
   "Run `supabase projects list` and `supabase orgs list`, and match the Supabase URL name in the .env files (name only) to a project, so we know which organization to upgrade.",
   "Upgrade that organization to Pro in my browser at https://supabase.com/dashboard/org (Billing > change plan). Confirm the spend cap is on. Ask me before paying.",
-  "Invite levi@upstreamconsulting.ca as a Developer (organization > Team > Invite). Ask me before sending.",
+  "Invite levi@upstreamconsulting.ca as an Administrator (organization > Team > Invite; he needs it to create the dev copy and change sign-in settings). Ask me before sending.",
   "Confirm the project is not paused and shows Pro."
  ],"confirmation that the Supabase invite to Levi went out"),
  "4-chrome":chrome(4,"put the app on estimates.legacywindows.ca",[
@@ -477,17 +498,36 @@ const P={
   "Open https://entra.microsoft.com in my browser and help me find the Global Administrator under Roles & admins.",
   "Do not create anything. This step is parked until after launch."
  ],"the Microsoft 365 admin's name"),
- "6-chrome":chrome(6,"get ready for Microsoft sign-in: confirm the Microsoft 365 admin, create one test field-crew account with no licence, and confirm we can reach the Supabase sign-in settings",[
-  "Open https://entra.microsoft.com, go to Roles & admins > Global Administrator and confirm the names. Open App registrations so I can see the page, but do not create anything; Levi registers the app.",
+ "6-chrome":chrome(6,"get Levi into Legacy's Microsoft Entra as a guest with the Application Administrator role, create one test field-crew account with no licence, and confirm we can reach the Supabase sign-in settings",[
+  "Open https://entra.microsoft.com signed in with my Legacy account. Go to Roles & admins > Global Administrator and confirm I am listed. If I am not, stop: only a Global Administrator can do the next two steps, so help me note who is.",
+  "Go to Users > New user > Invite external user. Email levi@upstreamconsulting.ca, display name Levi Dick (Upstream Consulting). Show me the screen before sending the invite.",
+  "Go to Roles & admins, open Application Administrator, choose Add assignments and pick Levi (he shows as a guest). Show me before confirming. This role lets him register the app; it does not give him access to anyone's email or files.",
   "Open https://admin.microsoft.com/#/users and choose Add a user. Name it Test Field with a username like testfield@legacywindows.ca. On the licences page choose the option to create the user without a product licence: field crew do not need a licence to sign in. Show me the summary before creating it, then show me the username. One caveat: an unlicensed user cannot reset a forgotten password themselves, so I reset it from this admin centre.",
   "Open https://supabase.com/dashboard/project/_/auth/providers and confirm I can see the Azure (Microsoft) provider. Do not switch it on; Levi does that."
- ],"the admin's name and the test field account username"),
- "6-code":code(6,"get ready for Microsoft sign-in: confirm the Microsoft 365 admin, create one test field-crew account with no licence, and confirm the Supabase sign-in settings are reachable",[
+ ],"confirmation that the Entra guest invite went out, and the test field account username"),
+ "6-code":code(6,"get Levi into Legacy's Microsoft Entra as a guest with the Application Administrator role, create one test field-crew account with no licence, and confirm the Supabase sign-in settings are reachable",[
   "Run `whoami /upn`, and check the .env files for SUPABASE and AUTH variable names (names only).",
-  "Open https://entra.microsoft.com in my browser and confirm the Global Administrator under Roles & admins. Open App registrations only to look; Levi registers the app.",
+  "Open https://entra.microsoft.com in my browser and confirm I am a Global Administrator under Roles & admins. If not, stop and help me note who is.",
+  "Users > New user > Invite external user: levi@upstreamconsulting.ca, display name Levi Dick (Upstream Consulting). Ask me before sending.",
+  "Roles & admins > Application Administrator > Add assignments > pick Levi (guest). Ask me before confirming. This lets him register the app; it gives no access to email or files.",
   "At https://admin.microsoft.com/#/users, add a user named Test Field (username like testfield@legacywindows.ca) with no product licence: field crew do not need a licence to sign in. Ask me before creating it. Remind me that an unlicensed user cannot reset a forgotten password themselves; I reset it from the admin centre.",
   "Open https://supabase.com/dashboard/project/_/auth/providers and confirm the Azure (Microsoft) provider is visible. Do not switch it on."
- ],"the admin's name and the test field account username")
+ ],"confirmation that the Entra guest invite went out, and the test field account username"),
+ "7-chrome":chrome(7,"put quote reading back on: a Legacy-owned Anthropic Console organization with credit, a monthly spend limit, Levi invited, and a fresh key in Vercel",[
+  "Open https://console.anthropic.com and sign up or sign in with my Legacy business email. If the existing account is on a personal email, create a new organization under the Legacy email instead.",
+  "Go to Settings > Billing and add credit on the Legacy card ($50 is plenty to start). Stop at the payment screen and show me the total.",
+  "Go to Settings > Limits and set a monthly spend limit (suggest $100). Show me before saving.",
+  "Go to Settings > Members and invite levi@upstreamconsulting.ca with the Developer role. Stop and show me before sending.",
+  "Go to Settings > API keys, create a key named bidconnect-vercel and keep that tab open. Do not paste the key anywhere except the next step, and never into an email or chat.",
+  "Open https://vercel.com/dashboard, open the legacy-estimator project, Settings > Environment Variables, find ANTHROPIC_API_KEY, replace its value with the new key for Production, save, then Deployments > Redeploy. Show me before saving.",
+  "Back in Anthropic, delete the old key. Then upload one supplier quote in BidConnect and confirm the lines come back."
+ ],"confirmation that the Anthropic invite went out and the spend limit you chose"),
+ "7-code":code(7,"put quote reading back on with a Legacy-owned, spend-capped Anthropic key in Vercel",[
+  "Run `vercel env ls` and tell me whether ANTHROPIC_API_KEY, ANTHROPIC_MODEL and ANTHROPIC_FALLBACKS exist and for which environments (names only, never values).",
+  "In my browser at https://console.anthropic.com: organization under the Legacy email, Settings > Billing add credit ($50 to start), Settings > Limits set a monthly spend limit (suggest $100), Settings > Members invite levi@upstreamconsulting.ca as Developer. Ask me before paying or inviting.",
+  "Settings > API keys: create a key named bidconnect-vercel. Then run `vercel env rm ANTHROPIC_API_KEY production` and `vercel env add ANTHROPIC_API_KEY production`, and I will paste the key when prompted so it never appears in this chat.",
+  "Run `vercel --prod` or trigger a redeploy from the dashboard, then have me upload one supplier quote in BidConnect to confirm the lines come back. Delete the old key in the Anthropic console."
+ ],"confirmation that the Anthropic invite went out and the spend limit you chose")
 };
 Object.keys(P).forEach(k=>{const el=document.getElementById("p-"+k);if(el)el.textContent=P[k]});
 
