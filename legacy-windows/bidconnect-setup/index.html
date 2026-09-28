@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Legacy BidConnect: Setup</title>
+<meta name="description" content="How Legacy BidConnect connects, the six accounts Peter sets up in order, and what each one costs.">
+<link rel="canonical" href="https://upstreamconsulting.github.io/client-deliverables/legacy-windows/bidconnect-setup/index.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F2EC; --card:#FFFDF9; --ink:#2E2A26; --muted:#6F665D; --line:#CFC3B3;
+  --clay:#B5694A; --tan:#D8C3A5; --stone:#8A8279;
+  --live:#5E8C61; --fix:#C8923A; --todo:#B5503F; --plan:#8A8279;
+  --accent-primary:#B5694A; /* alias of --clay for the design-system lint */
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1E1B18; --card:#2A2622; --ink:#EFE8DF; --muted:#B3A99D; --line:#4A433C;
+    --clay:#D88A6A; --tan:#6B5B47; --stone:#A69C90;
+    --live:#86B889; --fix:#E0AC55; --todo:#E07A68; --plan:#A69C90;
+    --accent-primary:#D88A6A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1E1B18; --card:#2A2622; --ink:#EFE8DF; --muted:#B3A99D; --line:#4A433C;
+  --clay:#D88A6A; --tan:#6B5B47; --stone:#A69C90;
+  --live:#86B889; --fix:#E0AC55; --todo:#E07A68; --plan:#A69C90;
+  --accent-primary:#D88A6A;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Corbel,"Segoe UI",Candara,"Trebuchet MS",sans-serif;line-height:1.45}
+header{padding:28px 24px 8px;max-width:1280px;margin:0 auto}
+h1{margin:0 0 4px;font-size:1.7rem;letter-spacing:.01em}
+header p{margin:0;color:var(--muted);max-width:760px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:14px 0 0;font-size:.9rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.wrap{max-width:1280px;margin:0 auto;padding:12px 24px 24px;display:grid;grid-template-columns:1fr 340px;gap:20px}
+.mapbox{position:relative;overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.map{position:relative;display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:34px;padding:18px 22px 26px;min-width:900px}
+.col h2{font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--clay);margin:0 0 10px}
+.col{display:flex;flex-direction:column;gap:14px;position:relative;z-index:2}
+.node{background:var(--bg);border:1.5px solid var(--line);border-left:5px solid var(--st,var(--stone));border-radius:10px;padding:9px 11px;cursor:pointer;text-align:left;font:inherit;color:inherit;transition:transform .12s,box-shadow .12s}
+.node:hover{transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,.08)}
+.node.sel{border-color:var(--clay);box-shadow:0 0 0 3px color-mix(in srgb,var(--clay) 25%,transparent)}
+.node.dim{opacity:.38}
+.node b{display:block;font-size:.98rem}
+.node small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}
+.node.planned{border-style:dashed;border-left-style:solid}
+svg.edges{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+svg.edges path{fill:none;stroke:var(--tan);stroke-width:1.6}
+svg.edges path.planned{stroke-dasharray:5 5;stroke:var(--stone);opacity:.7}
+svg.edges path.hi{stroke:var(--clay);stroke-width:2.6;opacity:1}
+svg.edges path.lo{opacity:.12}
+svg.edges text{font-size:10.5px;fill:var(--muted);font-family:inherit}
+svg.edges text.hi{fill:var(--clay);font-weight:bold}
+svg.edges text.lo{opacity:0}
+aside{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;align-self:start;position:sticky;top:calc(12px + env(safe-area-inset-top,0px))}
+aside h3{margin:0 0 2px;font-size:1.25rem}
+.badge{display:inline-block;font-size:.75rem;padding:2px 8px;border-radius:99px;color:#fff;margin:6px 0 10px}
+aside dt{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--clay);margin-top:10px}
+aside dd{margin:2px 0 0;font-size:.93rem}
+aside ul{margin:4px 0 0;padding-left:18px;font-size:.9rem}
+.hint{color:var(--muted);font-size:.92rem}
+section.below{max-width:1280px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;min-width:0}
+.panel h2{margin:0 0 4px;font-size:1.1rem}
+.panel > p.hint{margin:0 0 12px}
+ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:step}
+ol.steps li{margin:0 0 14px;padding:12px 14px 12px 46px;position:relative;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+ol.steps li::before{counter-increment:step;content:counter(step);position:absolute;left:12px;top:12px;width:24px;height:24px;border-radius:50%;background:var(--clay);color:#fff;font-weight:bold;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+ol.steps li b{font-size:1rem}
+ol.steps .plan{display:inline-block;margin-left:8px;font-size:.78rem;padding:1px 8px;border-radius:99px;border:1px solid var(--clay);color:var(--clay)}
+ol.steps li span{color:var(--muted);font-size:.9rem;display:block;margin-top:4px}
+ol.steps li span.do{color:var(--ink)}
+ol.steps li span b{font-size:.9rem;color:var(--clay)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+td{padding:6px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+td:last-child{text-align:right;white-space:nowrap}
+tr.total td{font-weight:bold;border-bottom:none}
+.note{color:var(--muted);font-size:.82rem;margin-top:8px}
+.rule{margin:14px 0 0;padding:10px 12px;border-left:4px solid var(--clay);background:var(--bg);border-radius:6px;font-size:.9rem}
+
+/* Checklist additions */
+.intro{margin:0 0 10px;font-size:.92rem}
+.progress{display:flex;align-items:center;gap:12px;margin:0 0 14px;font-size:.9rem;color:var(--muted)}
+.progress b{color:var(--ink);white-space:nowrap}
+.bar{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--live);transition:width .25s}
+.head{display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;padding-right:78px}
+.donebox{position:absolute;right:12px;top:11px;display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--muted);cursor:pointer;user-select:none}
+.donebox input{width:17px;height:17px;margin:0;accent-color:var(--live);cursor:pointer}
+ol.steps li.is-done{border-color:var(--live)}
+ol.steps li.is-done::before{background:var(--live);content:"\2713"}
+ol.steps li.is-done .donebox{color:var(--live);font-weight:bold}
+.open,.send{margin-top:10px;font-size:.9rem;line-height:1.7}
+.open b,.send b{color:var(--clay);font-size:.9rem}
+.open a{color:var(--clay);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--tan)}
+.open a:hover{text-decoration-color:var(--clay)}
+.open em{font-style:normal;color:var(--muted)}
+.prompts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn{font:inherit;font-size:.85rem;padding:6px 12px;border:1px solid var(--clay);color:var(--clay);background:transparent;border-radius:6px;cursor:pointer;transition:background .12s,color .12s}
+.btn:hover{background:var(--clay);color:#fff}
+.btn.ok,.btn.ok:hover{background:var(--live);border-color:var(--live);color:#fff}
+details{margin-top:6px;font-size:.85rem}
+summary{cursor:pointer;color:var(--muted);padding:2px 0}
+summary:hover{color:var(--clay)}
+details pre{white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;font-size:.84rem;line-height:1.5;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:6px 0 2px;color:var(--ink)}
+.send{border-top:1px dashed var(--line);padding-top:8px}
+footer{max-width:1280px;margin:0 auto;padding:0 24px 36px;display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.85rem}
+footer img{width:44px;height:auto;opacity:.85}
+footer .wm{font-family:Aboreto,Georgia,serif;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;color:var(--ink)}
+
+@media (max-width:980px){
+  .wrap,section.below{grid-template-columns:1fr}
+  aside{position:static}
+}
+@media (max-width:600px){
+  header,.wrap,section.below,footer{padding-left:16px;padding-right:16px}
+  .panel{padding:14px 14px}
+  ol.steps li{padding-left:42px}
+  .head{padding-right:70px}
+}
+@media print{
+  .btn,.progress,.bar{display:none}
+  .mapbox{overflow:visible}
+  details{display:block}
+  ol.steps li,.panel{break-inside:avoid}
+  aside{position:static}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Legacy BidConnect: how it all connects</h1>
+  <p>Click any box to see what it does, where it stands today, and where it's going. Solid lines exist today; dashed lines are planned. Below the map: the six things Peter sets up, in order, and what each one costs.</p>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--live)"></i>Working</span>
+    <span><i class="dot" style="background:var(--fix)"></i>Working, needs upgrade</span>
+    <span><i class="dot" style="background:var(--todo)"></i>Blocked / to set up</span>
+    <span><i class="dot" style="background:var(--plan)"></i>Planned</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="mapbox">
+    <div class="map" id="map">
+      <svg class="edges" id="edges"></svg>
+      <div class="col"><h2>People</h2>
+        <button class="node" data-id="devs"><b>Peter &amp; Levi</b><small>Build and change the app</small></button>
+        <button class="node" data-id="staff"><b>Estimators &amp; office</b><small>Quote in BidConnect</small></button>
+        <button class="node" data-id="field"><b>Field crew</b><small>Work orders in FieldConnect</small></button>
+        <button class="node" data-id="customers"><b>Customers</b><small>Review &amp; sign proposals</small></button>
+      </div>
+      <div class="col"><h2>Front door</h2>
+        <button class="node" data-id="dns"><b>legacywindows.ca DNS</b><small>The web address</small></button>
+        <button class="node" data-id="entra"><b>Microsoft Entra ID</b><small>One login for everyone</small></button>
+      </div>
+      <div class="col"><h2>Code &amp; app</h2>
+        <button class="node" data-id="github"><b>GitHub</b><small>Where the code lives</small></button>
+        <button class="node" data-id="vercel"><b>Vercel</b><small>Runs the app</small></button>
+      </div>
+      <div class="col"><h2>Data</h2>
+        <button class="node" data-id="db"><b>Supabase database</b><small>Every record &amp; rule</small></button>
+        <button class="node" data-id="storage"><b>Supabase storage</b><small>PDFs &amp; photos</small></button>
+        <button class="node planned" data-id="agent"><b>Audit &amp; maintenance agent</b><small>Watches everything</small></button>
+      </div>
+      <div class="col"><h2>Connected services</h2>
+        <button class="node" data-id="anthropic"><b>Anthropic API</b><small>Reads supplier quotes</small></button>
+        <button class="node" data-id="salesforce"><b>Salesforce</b><small>CRM &amp; opportunities</small></button>
+        <button class="node" data-id="email"><b>Email sender</b><small>Codes, links, alerts</small></button>
+        <button class="node planned" data-id="sharepoint"><b>SharePoint</b><small>Backup copy of files</small></button>
+        <button class="node" data-id="sharinpix"><b>SharinPix</b><small>Photos inside Salesforce</small></button>
+      </div>
+    </div>
+  </div>
+
+  <aside id="panel">
+    <h3>Pick a box</h3>
+    <p class="hint">Each box shows its purpose, what's stored there, today's setup, the target setup, and what it costs. The lines it connects to light up on the map.</p>
+    <p class="hint">Start with <b>Vercel</b>: it sits in the middle of everything.</p>
+  </aside>
+</div>
+
+<section class="below">
+  <div class="panel">
+    <h2>What Peter sets up, in order</h2>
+    <p class="hint">Every account is created with a Legacy business email and paid on a Legacy card, then Levi is invited in. No shared logins.</p>
+    <p class="intro">Each step has links to the exact pages, and two prompts. Copy the Claude in Chrome prompt if you want Claude to walk you through it on screen; copy the Claude Code prompt if you want it done from your PC. Tick Done when the item at the bottom of the card has been sent to Levi.</p>
+    <p class="note" style="margin:0 0 12px">Prices are USD per month, checked 2026-09-28.</p>
+    <div class="progress"><b id="progress-text">0 of 6 done</b><div class="bar"><i id="progress-bar"></i></div></div>
+    <ol class="steps" id="steps">
+
+      <li data-step="1">
+        <div class="head"><b>GitHub organization</b><span class="plan">Team plan, $4 per person</span></div>
+        <label class="donebox"><input type="checkbox" data-done="1">Done</label>
+        <span class="do">Create a Legacy organization, transfer the repo in, invite Levi. Start on Team.</span>
+        <span><b>What you get:</b> the code belongs to the company, not a person. Team adds branch rules and required reviewers, so nothing reaches the live app until a second person has looked at it.</span>
+        <span><b>Cost grows by:</b> $4 for each extra person. Two or three people means $8 to $12.</span>
+        <div class="open"><b>Open:</b>
+          <a href="https://github.com/organizations/plan" target="_blank" rel="noopener">Create the organization</a> <em>(pick Team)</em> &middot;
+          <a href="https://github.com/settings/repositories" target="_blank" rel="noopener">Your repositories</a> <em>(open the repo, then Settings &gt; Danger Zone &gt; Transfer ownership)</em> &middot;
+          <a href="https://github.com/orgs/ORG/people" target="_blank" rel="noopener">Invite people</a> <em>(replace ORG in the address with your new organization name)</em> &middot;
+          <a href="https://github.com/pricing" target="_blank" rel="noopener">Pricing</a>
+        </div>
+        <div class="prompts">
+          <button class="btn" data-copy="1-chrome">Copy prompt for Claude in Chrome</button>
+          <button class="btn" data-copy="1-code">Copy prompt for Claude Code</button>
+        </div>
+        <details><summary>Read the Claude in Chrome prompt</summary><pre id="p-1-chrome"></pre></details>
+        <details><summary>Read the Claude Code prompt</summary><pre id="p-1-code"></pre></details>
+        <div class="send"><b>Send Levi:</b> the organization name.</div>
+      </li>
+
+      <li data-step="2">
+        <div class="head"><b>Vercel team</b><span class="plan">Pro, $20 per developer</span></div>
+        <label class="donebox"><input type="checkbox" data-done="2">Done</label>
+        <span class="do">Create a Pro team, move the project into it, invite Levi, confirm it deploys from GitHub automatically.</span>
+        <span><b>What you get:</b> the server that runs the app, owned by Legacy. Hobby is personal and non-commercial and will not deploy a company repo. Pro includes $20 of usage credit and 1 TB of traffic, far more than BidConnect uses.</span>
+        <span><b>Cost grows by:</b> $20 per developer seat. Viewers are free. Peter and Levi is $40.</span>
+        <div class="open"><b>Open:</b>
+          <a href="https://vercel.com/teams/create" target="_blank" rel="noopener">Create the team</a> <em>(pick Pro)</em> &middot;
+          <a href="https://vercel.com/dashboard" target="_blank" rel="noopener">Dashboard</a> <em>(project &gt; Settings &gt; General &gt; Transfer Project; team &gt; Settings &gt; Members)</em> &middot;
+          <a href="https://vercel.com/pricing" target="_blank" rel="noopener">Pricing</a>
+        </div>
+        <div class="prompts">
+          <button class="btn" data-copy="2-chrome">Copy prompt for Claude in Chrome</button>
+          <button class="btn" data-copy="2-code">Copy prompt for Claude Code</button>
+        </div>
+        <details><summary>Read the Claude in Chrome prompt</summary><pre id="p-2-chrome"></pre></details>
+        <details><summary>Read the Claude Code prompt</summary><pre id="p-2-code"></pre></details>
+        <div class="send"><b>Send Levi:</b> confirmation that Levi's Vercel invite went out.</div>
+      </li>
+
+      <li data-step="3">
+        <div class="head"><b>Supabase</b><span class="plan">Pro, $25</span></div>
+        <label class="donebox"><input type="checkbox" data-done="3">Done</label>
+        <span class="do">Upgrade the existing organization to Pro, invite Levi. No migration needed.</span>
+        <span><b>What you get:</b> the database and file store stop pausing when idle, get a daily backup kept for 7 days, and 8 GB of database plus 100 GB of files. The spend cap is on by default, so the bill cannot run away.</span>
+        <span><b>Cost grows by:</b> nothing per person; members are unlimited and free. A separate dev copy for testing changes adds about $10.</span>
+        <div class="open"><b>Open:</b>
+          <a href="https://supabase.com/dashboard/org" target="_blank" rel="noopener">Your organizations</a> <em>(Billing &gt; change plan to Pro; Team &gt; Invite)</em> &middot;
+          <a href="https://supabase.com/pricing" target="_blank" rel="noopener">Pricing</a>
+        </div>
+        <div class="prompts">
+          <button class="btn" data-copy="3-chrome">Copy prompt for Claude in Chrome</button>
+          <button class="btn" data-copy="3-code">Copy prompt for Claude Code</button>
+        </div>
+        <details><summary>Read the Claude in Chrome prompt</summary><pre id="p-3-chrome"></pre></details>
+        <details><summary>Read the Claude Code prompt</summary><pre id="p-3-code"></pre></details>
+        <div class="send"><b>Send Levi:</b> confirmation that the Supabase invite went out.</div>
+      </li>
+
+      <li data-step="4">
+        <div class="head"><b>Web address on legacywindows.ca</b><span class="plan">No cost</span></div>
+        <label class="donebox"><input type="checkbox" data-done="4">Done</label>
+        <span class="do">Add estimates.legacywindows.ca in Vercel, then have whoever runs Legacy's website DNS add the one CNAME record Vercel shows.</span>
+        <span><b>What you get:</b> the app lives on Legacy's own address instead of a vercel.app link. Levi updates the app URL and sign-in settings afterwards.</span>
+        <div class="open"><b>Open:</b>
+          <a href="https://vercel.com/dashboard" target="_blank" rel="noopener">Dashboard</a> <em>(project &gt; Settings &gt; Domains)</em> &middot;
+          <a href="https://vercel.com/docs/domains/working-with-domains/add-a-domain" target="_blank" rel="noopener">How to add a domain</a> <em>(Vercel's guide)</em>
+        </div>
+        <div class="prompts">
+          <button class="btn" data-copy="4-chrome">Copy prompt for Claude in Chrome</button>
+          <button class="btn" data-copy="4-code">Copy prompt for Claude Code</button>
+        </div>
+        <details><summary>Read the Claude in Chrome prompt</summary><pre id="p-4-chrome"></pre></details>
+        <details><summary>Read the Claude Code prompt</summary><pre id="p-4-code"></pre></details>
+        <div class="send"><b>Send Levi:</b> the DNS host name (the company or service that manages legacywindows.ca).</div>
+      </li>
+
+      <li data-step="5">
+        <div class="head"><b>Microsoft Graph access</b><span class="plan">Included with Microsoft 365</span></div>
+        <label class="donebox"><input type="checkbox" data-done="5">Done</label>
+        <span class="do">Parked until after launch. When it is time, Legacy's Microsoft 365 admin approves one app registration.</span>
+        <span><b>What you get:</b> the app can copy files to SharePoint nightly and, later, send email from a Legacy mailbox.</span>
+        <div class="open"><b>Open:</b>
+          <a href="https://entra.microsoft.com" target="_blank" rel="noopener">Microsoft Entra admin centre</a> <em>(nothing to do here yet; only confirm who the admin is)</em>
+        </div>
+        <div class="prompts">
+          <button class="btn" data-copy="5-chrome">Copy prompt for Claude in Chrome</button>
+          <button class="btn" data-copy="5-code">Copy prompt for Claude Code</button>
+        </div>
+        <details><summary>Read the Claude in Chrome prompt</summary><pre id="p-5-chrome"></pre></details>
+        <details><summary>Read the Claude Code prompt</summary><pre id="p-5-code"></pre></details>
+        <div class="send"><b>Send Levi:</b> the Microsoft 365 admin's name.</div>
+      </li>
+
+      <li data-step="6">
+        <div class="head"><b>Microsoft sign-in (SSO)</b><span class="plan">Included with Microsoft 365</span></div>
+        <label class="donebox"><input type="checkbox" data-done="6">Done</label>
+        <span class="do">Tell Levi who the Microsoft 365 admin is. Levi registers the app and switches sign-in to Microsoft, limited to Legacy accounts.</span>
+        <span><b>What you get:</b> one login for everyone, Authenticator for MFA, and offboarding is disabling one account. Field crew get a free account in the directory; a paid licence is only needed for email, Teams or Office. Test one field account first.</span>
+        <div class="open"><b>Open:</b>
+          <a href="https://entra.microsoft.com" target="_blank" rel="noopener">Microsoft Entra admin centre</a> <em>(App registrations; Levi does the registration)</em> &middot;
+          <a href="https://admin.microsoft.com/#/users" target="_blank" rel="noopener">Microsoft 365 users</a> <em>(add a test field user with no licence)</em> &middot;
+          <a href="https://supabase.com/dashboard/project/_/auth/providers" target="_blank" rel="noopener">Supabase sign-in providers</a> <em>(where Levi switches on Microsoft)</em>
+        </div>
+        <div class="prompts">
+          <button class="btn" data-copy="6-chrome">Copy prompt for Claude in Chrome</button>
+          <button class="btn" data-copy="6-code">Copy prompt for Claude Code</button>
+        </div>
+        <details><summary>Read the Claude in Chrome prompt</summary><pre id="p-6-chrome"></pre></details>
+        <details><summary>Read the Claude Code prompt</summary><pre id="p-6-code"></pre></details>
+        <div class="send"><b>Send Levi:</b> the admin's name and one test field account username.</div>
+      </li>
+
+    </ol>
+    <div class="rule"><b>Once these are done, lock it down:</b> turn off open sign-ups, 2FA on every admin account, rotate the tokens on Peter's PC, and put a spend cap on the Anthropic key.</div>
+  </div>
+  <div class="panel">
+    <h2>Monthly cost once it is all set up</h2>
+    <table>
+      <tr><td>GitHub Team (Peter + Levi, $4 each)</td><td>$8 USD</td></tr>
+      <tr><td>Vercel Pro (Peter + Levi developer seats)</td><td>$40 USD</td></tr>
+      <tr><td>Supabase Pro (backups, no pausing, 100 GB files)</td><td>$25 USD</td></tr>
+      <tr><td>Supabase dev project (testing copy)</td><td>~$10 USD</td></tr>
+      <tr><td>Anthropic API (quote reading, spend-capped)</td><td>~$10–60 USD</td></tr>
+      <tr><td>Microsoft Entra ID and Graph (included with Microsoft 365)</td><td>$0</td></tr>
+      <tr><td>Email sender (Resend free tier or M365)</td><td>$0–20 USD</td></tr>
+      <tr class="total"><td>Approximate total</td><td>~$95–165 USD</td></tr>
+    </table>
+    <p class="note">Adding a third developer later costs $4 on GitHub and $20 on Vercel, nothing elsewhere. GitHub's $4 and Vercel's $20 are the first-year and list rates shown on 2026-09-28; confirm at signup.</p>
+    <h2 style="margin-top:18px">Where the money goes</h2>
+    <table>
+      <tr><td>GitHub</td><td>Owns the code</td></tr>
+      <tr><td>Vercel</td><td>Runs the app</td></tr>
+      <tr><td>Supabase</td><td>Holds the data and files</td></tr>
+      <tr><td>Anthropic</td><td>Reads the quotes</td></tr>
+      <tr><td>Microsoft 365</td><td>Who is allowed in</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <img src="data:image/png;base64,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" alt="Upstream Consulting" data-asset="logo-symbol.png">
+  <div><span class="wm">Upstream Consulting</span><br>Prepared for Legacy Windows &amp; Doors, 2026-09-28. Questions: levi@upstreamconsulting.ca</div>
+</footer>
+
+<script>
+const S={live:["Working","var(--live)"],fix:["Working, needs upgrade","var(--fix)"],todo:["Blocked / to set up","var(--todo)"],plan:["Planned","var(--plan)"]};
+const N={
+ devs:{t:"Peter & Levi",s:"todo",purpose:"The people who build and change BidConnect and FieldConnect, working with Claude Code.",today:"Only Peter, on his Windows PC. He deploys straight from his machine with a Vercel token, so there's no shared workflow yet.",target:"Both push changes to GitHub. Every change gets a preview link, a second person reviews it, and merging to main deploys the live app automatically.",own:"Peter (owner), Levi (collaborator)"},
+ staff:{t:"Estimators & office",s:"fix",purpose:"Staff who create estimates, read supplier quotes, cost jobs and send proposals. They see costs and margins, so it's internal only.",today:"Email and password sign-in. Only Peter's account can get sign-in codes, because the built-in email sender only reaches Supabase team members.",target:"Sign in with their Microsoft 365 login, with Authenticator for MFA. Their name is stamped on every change in the audit log.",own:"Roles: estimator, admin"},
+ field:{t:"Field crew",s:"todo",purpose:"Crews using FieldConnect: work orders, closeouts, time cards and service issues from the job site.",today:"No Microsoft accounts. FieldConnect shares the same database as BidConnect.",target:"A free user account in Legacy's Microsoft directory, which is enough to sign in. A paid licence is only needed if they want email, Teams or Office. One catch: an unlicensed user cannot reset a forgotten password themselves, so Peter resets it from the admin centre. Test with one account first.",own:"Ops manager approves time cards",cost:"$0 per field account"},
+ customers:{t:"Customers",s:"live",purpose:"Open their private proposal link, choose options, tick each general condition and sign.",today:"Working. No login: a long, unguessable link is the only key, and it expires after 30 days. They never see costs or margins.",target:"Unchanged. Later: automatic emails with the link and signed copy, and a deposit payment link.",own:"—"},
+ dns:{t:"legacywindows.ca DNS",s:"todo",purpose:"Turns a web address into 'go to the app'. One record makes estimates.legacywindows.ca point at Vercel.",today:"The app lives at legacy-estimator-two.vercel.app.",target:"Add the domain in Vercel, then create the CNAME record Vercel shows at whoever hosts legacywindows.ca DNS. After that, update the app URL setting and the Supabase sign-in redirect URLs, or logins will bounce.",own:"Whoever manages Legacy's website or domain (to confirm)",cost:"$0"},
+ entra:{t:"Microsoft Entra ID",s:"plan",purpose:"Legacy's Microsoft 365 directory: the single list of who works at Legacy. It becomes the one login for every satellite app.",today:"Exists as part of Legacy's Microsoft 365, but it isn't connected to the app.",target:"The app is registered in Entra and Supabase uses the Microsoft sign-in provider, limited to Legacy's accounts only. Offboarding means disabling one account, which locks that person out of everything. Microsoft Graph access for SharePoint backups rides on the same registration, after launch.",own:"Legacy's Microsoft 365 admin",cost:"Included with Microsoft 365; field accounts are free"},
+ github:{t:"GitHub",s:"todo",purpose:"The home of the code. Every change is recorded, so you can see who changed what and roll back. It's how Peter and Levi work at the same time without overwriting each other.",today:"Unclear whether the code is pushed. The source zip had no Git history, and Peter wasn't sure.",target:"A GitHub organization owned by Legacy, not a personal account, on the Team plan, with the repo transferred in and Levi added. Team adds branch rules and required reviewers so nothing reaches the live app unreviewed.",own:"Legacy (Peter as owner)",cost:"Team: $4 per person per month. Free organizations exist but lack branch rules and required reviewers on private repos"},
+ vercel:{t:"Vercel",s:"fix",purpose:"Runs the app: the web pages, the server code and the calls out to Claude and Salesforce. It stores no files and no data; every request is handled and forgotten.",today:"Hobby plan, which is for non-commercial use only. It can't deploy a private repo owned by a GitHub organization, and other people's commits won't deploy. Deploys happen from Peter's PC.",target:"A Pro team owned by Legacy, with Levi as a member. It deploys automatically from GitHub, gets preview links for each change, and has spend alerts.",own:"Legacy",cost:"Pro: $20 per developer seat per month, includes $20 usage credit and 1 TB traffic. Viewers free"},
+ db:{t:"Supabase database",s:"fix",purpose:"Every record: estimates, versions, line items, pricing, options, signatures, the audit log and what Claude read from each PDF. It enforces the rules too, so sent or signed versions can't be changed. It's also the login service today.",today:"Free plan: 500 MB, pauses after 7 days idle, no automatic backups. Hosted in Canada.",target:"Pro plan: daily backups kept 7 days, never pauses, 8 GB database. A separate dev project for testing changes, with only one person pushing changes to the live database.",own:"Legacy",cost:"Pro $25/month, members unlimited and free, spend cap on by default. Dev project about $10 more"},
+ storage:{t:"Supabase storage",s:"fix",purpose:"The actual files, in private folders: supplier quote PDFs, signed proposal PDFs, gallery photos and FieldConnect photos. Every view uses a temporary link.",today:"Free plan: 1 GB total, which fills fast with PDFs and photos.",target:"Pro plan: 100 GB. Add a nightly copy to SharePoint so Legacy owns a backup outside Supabase.",own:"Legacy",cost:"Included in Supabase Pro"},
+ agent:{t:"Audit & maintenance agent",s:"plan",purpose:"A scheduled check, nightly or Friday, that looks across Supabase, Salesforce, SharePoint and Vercel. It flags misfiled or missing data and broken connections before someone hits them on a Friday at 5.",today:"Not built.",target:"Built alongside the connectors, sending a short report. It can also check that backups ran.",own:"Upstream builds; Legacy receives reports"},
+ anthropic:{t:"Anthropic API",s:"todo",purpose:"Reads each supplier quote PDF and returns the windows and doors as line items. It also writes the short 'what changed' summary between versions.",today:"Down: the $5 free credit is used up. It costs about $0.30–0.40 per quote on Opus 5.",target:"A Legacy-owned, funded key with a monthly spend cap. Free parsers read the common suppliers first; Claude only reads what they cannot. Skip re-reading duplicate quotes.",own:"Legacy",cost:"Pay per use, capped monthly"},
+ salesforce:{t:"Salesforce",s:"todo",purpose:"The CRM and current source of truth for opportunities. Each estimate links one-to-one to an opportunity.",today:"The read connection is built but not connected. It needs a Salesforce admin to create an External Client App.",target:"Pull opportunity details in (address, crew days, supply-only). Later, push the estimate link, version, total and status back. The long-term off-ramp is a separate decision.",own:"Legacy's Salesforce admin"},
+ email:{t:"Email sender",s:"todo",purpose:"Sends sign-in codes today. Later it sends proposal links, the signed copy to customers, and opened/signed alerts to staff.",today:"Supabase's built-in sender, which only reaches Supabase team members.",target:"Resend or Microsoft 365 SMTP. With Microsoft sign-in, staff won't need codes, but proposal emails still need a proper sender.",own:"Legacy",cost:"Free tier to ~$20/month"},
+ sharepoint:{t:"SharePoint",s:"plan",purpose:"Legacy's company file system: the backup home for quote PDFs and signed proposals, owned by Legacy.",today:"Not connected. It needs a Microsoft Graph connection, parked until after launch.",target:"A nightly copy of new files from Supabase storage, filed by estimate. The decision on SharePoint vs SharinPix vs app storage is part of the storage review.",own:"Legacy"},
+ sharinpix:{t:"SharinPix",s:"live",purpose:"Photo storage inside Salesforce, and cheaper than SharePoint for images.",today:"Used with Salesforce. Not connected to BidConnect: the gallery lives in Supabase storage.",target:"Decide whether gallery and field photos stay in Supabase or move here. That depends on the Salesforce decision.",own:"Legacy"}
+};
+const E=[
+ ["devs","github","push code"],["github","vercel","auto-deploy"],
+ ["staff","entra","sign in",1],["field","entra","sign in",1],["entra","vercel","confirms who",1],
+ ["staff","dns","web address"],["customers","dns","proposal link"],["dns","vercel","points to app"],
+ ["vercel","db","read / write"],["vercel","storage","save / fetch files"],
+ ["vercel","anthropic","send PDF, get lines"],["vercel","salesforce","pull / push",1],["vercel","email","send",0],
+ ["storage","sharepoint","nightly backup",1],["salesforce","sharinpix","photos"],
+ ["agent","db","",1],["agent","salesforce","",1],["agent","sharepoint","",1]
+];
+const map=document.getElementById("map"),svg=document.getElementById("edges"),panel=document.getElementById("panel");
+let sel=null;
+function box(id){const el=map.querySelector(`[data-id="${id}"]`),r=el.getBoundingClientRect(),m=map.getBoundingClientRect();return{l:r.left-m.left,r:r.right-m.left,t:r.top-m.top,b:r.bottom-m.top,cy:(r.top+r.bottom)/2-m.top,cx:(r.left+r.right)/2-m.left}}
+function draw(){
+  svg.setAttribute("viewBox",`0 0 ${map.scrollWidth} ${map.scrollHeight}`);
+  let h="";
+  E.forEach(([a,b,label,planned],i)=>{
+    const A=box(a),B=box(b);let d,lx,ly;
+    if(B.l>A.r+5){const x1=A.r,y1=A.cy,x2=B.l,y2=B.cy,mx=(x1+x2)/2;d=`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;lx=mx;ly=(y1+y2)/2-4}
+    else if(A.l>B.r+5){const x1=A.l,y1=A.cy,x2=B.r,y2=B.cy,mx=(x1+x2)/2;d=`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`;lx=mx;ly=(y1+y2)/2-4}
+    else{const x=Math.max(A.r,B.r),y1=A.cy,y2=B.cy,off=26;d=`M${A.r},${y1} C${x+off},${y1} ${x+off},${y2} ${B.r},${y2}`;lx=x+off+2;ly=(y1+y2)/2}
+    const on=sel&&(a===sel||b===sel),cls=(planned?"planned ":"")+(sel?(on?"hi":"lo"):"");
+    h+=`<path class="${cls}" d="${d}"/>`;
+    if(label)h+=`<text class="${sel?(on?"hi":"lo"):""}" x="${lx}" y="${ly}" text-anchor="middle">${label}</text>`;
+  });
+  svg.innerHTML=h;
+}
+function show(id){
+  sel=id;const n=N[id],[sl,sc]=S[n.s];
+  map.querySelectorAll(".node").forEach(el=>{const i=el.dataset.id;el.classList.toggle("sel",i===id);
+    const linked=E.some(([a,b])=>(a===id&&b===i)||(b===id&&a===i));el.classList.toggle("dim",i!==id&&!linked)});
+  const links=E.filter(([a,b])=>a===id||b===id).map(([a,b,l])=>`<li>${N[a===id?b:a].t}${l?` <span class="hint">(${l})</span>`:""}</li>`).join("");
+  panel.innerHTML=`<h3>${n.t}</h3><span class="badge" style="background:${sc}">${sl}</span>
+  <dl><dt>What it does</dt><dd>${n.purpose}</dd><dt>Today</dt><dd>${n.today}</dd><dt>Target</dt><dd>${n.target}</dd>
+  ${n.cost?`<dt>Cost</dt><dd>${n.cost}</dd>`:""}<dt>Owner</dt><dd>${n.own}</dd>
+  ${links?`<dt>Connects to</dt><dd><ul>${links}</ul></dd>`:""}</dl>
+  <p class="hint" style="margin-top:12px"><a href="#" id="clr" style="color:var(--clay)">Show everything</a></p>`;
+  document.getElementById("clr").onclick=e=>{e.preventDefault();clear()};
+  draw();
+}
+function clear(){sel=null;map.querySelectorAll(".node").forEach(el=>el.classList.remove("sel","dim"));
+  panel.innerHTML=`<h3>Pick a box</h3><p class="hint">Each box shows its purpose, what's stored there, today's setup, the target setup, and what it costs. The lines it connects to light up on the map.</p>`;draw()}
+map.querySelectorAll(".node").forEach(el=>{el.style.setProperty("--st",S[N[el.dataset.id].s][1]);el.onclick=()=>sel===el.dataset.id?clear():show(el.dataset.id)});
+window.addEventListener("resize",draw);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+draw();
+
+/* ── Checklist: prompts, copy buttons, Done state ── */
+const LEVI="levi@upstreamconsulting.ca";
+const RULES="Rules: use my Legacy business email, never a personal account; stop and ask me before anything that spends money or invites a person; show me each screen before clicking.";
+const CODE_CHECK="First check what is already configured here (for example: `gh auth status`, `vercel whoami`, `supabase projects list`, the .env files in C:\\dev\\legacy-estimator) and tell me what you found before changing anything. Never print secret values in full.";
+function chrome(n,goal,steps,send){return `You are helping me, Peter at Legacy Windows & Doors, do step ${n} of the BidConnect setup live in my browser. Goal: ${goal}. ${RULES} Steps:\n${steps.map((s,i)=>`${i+1}. ${s}`).join("\n")}\nFinish by telling me what to send Levi (${LEVI}): ${send}.`}
+function code(n,goal,steps,send){return `I'm Peter at Legacy Windows & Doors. Help me with step ${n} of the BidConnect setup from this machine. Goal: ${goal}. ${CODE_CHECK} Then walk me through:\n${steps.map((s,i)=>`${i+1}. ${s}`).join("\n")}\nWhen done, tell me what to send Levi (${LEVI}): ${send}.`}
+const P={
+ "1-chrome":chrome(1,"create a GitHub organization owned by Legacy on the Team plan, move the legacy-estimator repository into it, and invite Levi",[
+  "Open https://github.com/organizations/plan. If I am not signed in, sign in with my Legacy business email (if I have no GitHub account on that email, create one first).",
+  "Choose the Team plan. Name the organization (for example legacy-windows-doors), use my Legacy email as the contact, and choose the business option. Stop at the payment screen and show me the total before I pay on the Legacy card. Compare it with https://github.com/pricing.",
+  "Open https://github.com/settings/repositories and open the legacy-estimator repository. If it is not there, tell me: the code may not be on GitHub yet, and I will use the Claude Code prompt instead. Otherwise go to Settings, scroll to Danger Zone, choose Transfer ownership and type the new organization name. Show me the confirmation before clicking.",
+  "Open https://github.com/orgs/ORG/people, replacing ORG with the organization name from step 2. Click Invite member, enter levi@upstreamconsulting.ca, role Member. Stop and show me before sending.",
+  "Confirm the repository now sits under the organization, not under my personal account."
+ ],"the organization name"),
+ "1-code":code(1,"get the legacy-estimator code into a GitHub organization owned by Legacy on the Team plan, with Levi invited",[
+  "If the code is not in Git yet: run `git -C C:\\dev\\legacy-estimator status`; if needed initialise the repo, add a .gitignore that excludes .env files, node_modules and .vercel, and show me `git status` so I can confirm no secret file is staged.",
+  "Create the organization in my browser at https://github.com/organizations/plan (Team plan, Legacy email, Legacy card). Ask me before paying.",
+  "Put the repository in the organization: `gh repo create ORG/legacy-estimator --private --source . --push` if it is new, or Settings > Danger Zone > Transfer ownership on GitHub if it already exists under my personal account. ORG is the organization name from step 2.",
+  "Invite levi@upstreamconsulting.ca as a Member at https://github.com/orgs/ORG/people. Ask me before sending.",
+  "Confirm `git remote -v` points at the organization and that `git push` works."
+ ],"the organization name"),
+ "2-chrome":chrome(2,"create a Vercel Pro team owned by Legacy, move the legacy-estimator project into it, invite Levi, and confirm it deploys from GitHub automatically",[
+  "Open https://vercel.com/teams/create, signed in with my Legacy email. Name the team Legacy Windows & Doors and choose Pro. Check https://vercel.com/pricing (Pro is $20 per developer seat). Stop at the payment screen and show me the total.",
+  "Open https://vercel.com/dashboard, open the legacy-estimator project, go to Settings > General > Transfer Project and choose the new team. Show me before confirming.",
+  "In the team, go to Settings > Members > Invite. Enter levi@upstreamconsulting.ca with the Member role. Stop and show me before sending.",
+  "In the project, go to Settings > Git and confirm it is connected to the repository in the GitHub organization from step 1. If Vercel asks to install its GitHub app on the organization, show me that screen before approving. Production branch should be main.",
+  "Open the Deployments tab and confirm the latest deployment came from GitHub, not from the command line on my PC."
+ ],"confirmation that the Vercel invite to Levi went out, and the team name"),
+ "2-code":code(2,"move the legacy-estimator project into a Vercel Pro team owned by Legacy, invite Levi, and confirm deploys come from GitHub",[
+  "Run `vercel whoami`, `vercel teams ls` and `vercel projects ls`, and look at the .vercel folder in C:\\dev\\legacy-estimator, to tell me which account and project this PC is linked to.",
+  "Create the team in my browser at https://vercel.com/teams/create (Pro, Legacy email, Legacy card). Ask me before paying.",
+  "Transfer the project into the team from https://vercel.com/dashboard (project > Settings > General > Transfer Project), then run `vercel switch` and `vercel link` so this folder points at the team's project.",
+  "Invite levi@upstreamconsulting.ca as a Member (team > Settings > Members). Ask me before sending.",
+  "Confirm the project's Git connection points at the GitHub organization repository, and run `vercel env ls` to confirm the environment variable names moved with the project (names only, never values). Remind me that the old personal Vercel token on this PC gets revoked in Levi's lockdown step."
+ ],"confirmation that the Vercel invite to Levi went out"),
+ "3-chrome":chrome(3,"upgrade the Supabase organization that holds the BidConnect project to Pro and invite Levi",[
+  "Open https://supabase.com/dashboard/org, signed in with my Legacy email, and pick the organization that contains the BidConnect (legacy-estimator) project.",
+  "Go to Billing and change the plan to Pro ($25, check https://supabase.com/pricing). Confirm the spend cap is switched on. Stop at the payment screen and show me the total.",
+  "Go to Team > Invite, enter levi@upstreamconsulting.ca with the Developer role. Stop and show me before sending.",
+  "Open the project and confirm it is no longer paused and shows the Pro plan."
+ ],"confirmation that the Supabase invite to Levi went out"),
+ "3-code":code(3,"upgrade the Supabase organization behind BidConnect to Pro and invite Levi",[
+  "Run `supabase projects list` and `supabase orgs list`, and match the Supabase URL name in the .env files (name only) to a project, so we know which organization to upgrade.",
+  "Upgrade that organization to Pro in my browser at https://supabase.com/dashboard/org (Billing > change plan). Confirm the spend cap is on. Ask me before paying.",
+  "Invite levi@upstreamconsulting.ca as a Developer (organization > Team > Invite). Ask me before sending.",
+  "Confirm the project is not paused and shows Pro."
+ ],"confirmation that the Supabase invite to Levi went out"),
+ "4-chrome":chrome(4,"put the app on estimates.legacywindows.ca",[
+  "Open https://vercel.com/dashboard, open the legacy-estimator project, go to Settings > Domains and add estimates.legacywindows.ca.",
+  "Vercel will show one DNS record to create: type CNAME, name estimates, and a value like cname.vercel-dns.com. Copy it exactly as shown. Vercel's guide is at https://vercel.com/docs/domains/working-with-domains/add-a-domain.",
+  "Help me work out who manages DNS for legacywindows.ca (the website company or the domain registrar). Draft a short message to them with the record. Do not send anything without me.",
+  "Once they say it is done, come back to the Domains page and check until it shows Valid Configuration."
+ ],"the name of the company or service that manages Legacy's DNS"),
+ "4-code":code(4,"put the app on estimates.legacywindows.ca",[
+  "Run `nslookup -type=NS legacywindows.ca` to find who hosts Legacy's DNS, and `vercel domains ls` to see what is already added.",
+  "Add the domain to the project with `vercel domains add estimates.legacywindows.ca` or from https://vercel.com/dashboard (project > Settings > Domains), and read back the CNAME record Vercel wants.",
+  "Draft a short message to the DNS host with that record. Do not send it without me.",
+  "After they confirm, run `nslookup estimates.legacywindows.ca` and check the Vercel Domains page shows Valid Configuration. Do not change the app URL setting or the Supabase redirect URLs; Levi does that afterwards."
+ ],"the name of the company or service that manages Legacy's DNS"),
+ "5-chrome":chrome(5,"nothing to do until Levi asks; just confirm who the Microsoft 365 global admin is",[
+  "Open https://entra.microsoft.com signed in with my Legacy Microsoft 365 account.",
+  "Go to Roles & admins, open Global Administrator and read me the names listed. If the page will not open, I am probably not an admin; help me note who set up Microsoft 365 for Legacy.",
+  "Do not create an app registration or change any setting. This step is parked until after launch."
+ ],"the Microsoft 365 admin's name"),
+ "5-code":code(5,"nothing to do until Levi asks; just confirm who the Microsoft 365 global admin is",[
+  "Run `whoami /upn` to show which Microsoft account this PC is signed in with, and check the .env files for any variable names starting with MICROSOFT_ or AZURE_ (names only).",
+  "Open https://entra.microsoft.com in my browser and help me find the Global Administrator under Roles & admins.",
+  "Do not create anything. This step is parked until after launch."
+ ],"the Microsoft 365 admin's name"),
+ "6-chrome":chrome(6,"get ready for Microsoft sign-in: confirm the Microsoft 365 admin, create one test field-crew account with no licence, and confirm we can reach the Supabase sign-in settings",[
+  "Open https://entra.microsoft.com, go to Roles & admins > Global Administrator and confirm the names. Open App registrations so I can see the page, but do not create anything; Levi registers the app.",
+  "Open https://admin.microsoft.com/#/users and choose Add a user. Name it Test Field with a username like testfield@legacywindows.ca. On the licences page choose the option to create the user without a product licence: field crew do not need a licence to sign in. Show me the summary before creating it, then show me the username. One caveat: an unlicensed user cannot reset a forgotten password themselves, so I reset it from this admin centre.",
+  "Open https://supabase.com/dashboard/project/_/auth/providers and confirm I can see the Azure (Microsoft) provider. Do not switch it on; Levi does that."
+ ],"the admin's name and the test field account username"),
+ "6-code":code(6,"get ready for Microsoft sign-in: confirm the Microsoft 365 admin, create one test field-crew account with no licence, and confirm the Supabase sign-in settings are reachable",[
+  "Run `whoami /upn`, and check the .env files for SUPABASE and AUTH variable names (names only).",
+  "Open https://entra.microsoft.com in my browser and confirm the Global Administrator under Roles & admins. Open App registrations only to look; Levi registers the app.",
+  "At https://admin.microsoft.com/#/users, add a user named Test Field (username like testfield@legacywindows.ca) with no product licence: field crew do not need a licence to sign in. Ask me before creating it. Remind me that an unlicensed user cannot reset a forgotten password themselves; I reset it from the admin centre.",
+  "Open https://supabase.com/dashboard/project/_/auth/providers and confirm the Azure (Microsoft) provider is visible. Do not switch it on."
+ ],"the admin's name and the test field account username")
+};
+Object.keys(P).forEach(k=>{const el=document.getElementById("p-"+k);if(el)el.textContent=P[k]});
+
+function copyText(t){
+  if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
+  return new Promise((res,rej)=>{const ta=document.createElement("textarea");ta.value=t;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();try{document.execCommand("copy")?res():rej()}catch(e){rej(e)}document.body.removeChild(ta)});
+}
+document.querySelectorAll("[data-copy]").forEach(btn=>{
+  const label=btn.textContent;
+  btn.addEventListener("click",()=>{
+    copyText(P[btn.dataset.copy]).then(()=>{btn.textContent="Copied";btn.classList.add("ok")})
+      .catch(()=>{btn.textContent="Select the text below and copy it";const d=btn.parentElement.nextElementSibling;if(d)d.open=true})
+      .finally(()=>setTimeout(()=>{btn.textContent=label;btn.classList.remove("ok")},2000));
+  });
+});
+
+const KEY="bidconnect-setup-done";
+function loadDone(){try{const v=JSON.parse(localStorage.getItem(KEY)||"[]");return Array.isArray(v)?v:[]}catch(e){return[]}}
+function saveDone(a){try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
+function renderDone(){
+  const done=loadDone(),total=document.querySelectorAll("[data-done]").length;
+  document.querySelectorAll("[data-done]").forEach(cb=>{const on=done.includes(cb.dataset.done);cb.checked=on;cb.closest("li").classList.toggle("is-done",on)});
+  document.getElementById("progress-text").textContent=`${done.length} of ${total} done`;
+  document.getElementById("progress-bar").style.width=(100*done.length/total)+"%";
+}
+document.querySelectorAll("[data-done]").forEach(cb=>cb.addEventListener("change",()=>{
+  let done=loadDone().filter(x=>x!==cb.dataset.done);if(cb.checked)done.push(cb.dataset.done);saveDone(done);renderDone();
+}));
+renderDone();
+</script>
+</body>
+</html>
