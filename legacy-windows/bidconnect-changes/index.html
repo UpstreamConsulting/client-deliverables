@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BidConnect: Making a Change</title>
+<meta name="description" content="The four sentences Peter says to Claude Code to get a BidConnect change from his PC to the live app, what to watch for, and how to ask for something.">
+<link rel="canonical" href="https://upstreamconsulting.github.io/client-deliverables/legacy-windows/bidconnect-changes/index.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F2EC; --card:#FFFDF9; --ink:#2E2A26; --muted:#6F665D; --line:#CFC3B3;
+  --clay:#B5694A; --tan:#D8C3A5; --stone:#8A8279;
+  --live:#5E8C61; --fix:#C8923A; --todo:#B5503F; --plan:#8A8279;
+  --accent-primary:#B5694A; /* alias of --clay for the design-system lint */
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1E1B18; --card:#2A2622; --ink:#EFE8DF; --muted:#B3A99D; --line:#4A433C;
+    --clay:#D88A6A; --tan:#6B5B47; --stone:#A69C90;
+    --live:#86B889; --fix:#E0AC55; --todo:#E07A68; --plan:#A69C90;
+    --accent-primary:#D88A6A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1E1B18; --card:#2A2622; --ink:#EFE8DF; --muted:#B3A99D; --line:#4A433C;
+  --clay:#D88A6A; --tan:#6B5B47; --stone:#A69C90;
+  --live:#86B889; --fix:#E0AC55; --todo:#E07A68; --plan:#A69C90;
+  --accent-primary:#D88A6A;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Corbel,"Segoe UI",Candara,"Trebuchet MS",sans-serif;line-height:1.45}
+header{padding:28px 24px 6px;max-width:1280px;margin:0 auto}
+.eyebrow{font-size:.74rem;text-transform:uppercase;letter-spacing:.12em;color:var(--clay);margin:0 0 6px}
+h1{margin:0 0 4px;font-size:1.7rem;letter-spacing:.01em}
+header p{margin:0;color:var(--muted);max-width:760px;font-size:1.02rem}
+code{font-family:inherit;font-size:.95em;background:color-mix(in srgb,var(--tan) 30%,transparent);padding:0 4px;border-radius:4px;overflow-wrap:anywhere}
+a{color:var(--clay);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--tan)}
+a:hover{text-decoration-color:var(--clay)}
+
+.wrap{max-width:1280px;margin:0 auto;padding:10px 24px 20px;display:grid;gap:16px}
+h2{margin:0 0 8px;font-size:1.1rem}
+h2 small{font-weight:normal;color:var(--muted);font-size:.9rem;margin-left:8px}
+
+/* Big numbered cards */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;min-width:0;display:flex;flex-direction:column;gap:8px;position:relative}
+.card .num{width:34px;height:34px;border-radius:50%;background:var(--clay);color:#fff;font-weight:bold;font-size:1.05rem;display:flex;align-items:center;justify-content:center;flex:none}
+.card h3{margin:0;font-size:1.05rem}
+.card .say{margin:0;padding:10px 12px;border-left:4px solid var(--clay);background:var(--bg);border-radius:6px;font-size:.98rem;line-height:1.4}
+.card .say q{quotes:"\201C" "\201D"}
+.card .say q::before,.card .say q::after{color:var(--clay)}
+.card .say var{font-style:italic;color:var(--muted)}
+.card p{margin:0;color:var(--muted);font-size:.88rem}
+.card p b{color:var(--ink)}
+.btn{font:inherit;font-size:.85rem;padding:6px 12px;border:1px solid var(--clay);color:var(--clay);background:transparent;border-radius:6px;cursor:pointer;transition:background .12s,color .12s;align-self:flex-start;margin-top:auto}
+.btn:hover{background:var(--clay);color:#fff}
+.btn.ok,.btn.ok:hover{background:var(--live);border-color:var(--live);color:#fff}
+.card.merge .say{border-left-color:var(--tan)}
+
+/* Watch cards */
+.watch{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.watch .card{gap:6px}
+.watch .pill{display:inline-block;font-size:.8rem;padding:2px 9px;border-radius:99px;color:#fff;margin-right:6px;vertical-align:middle}
+.watch p{font-size:.9rem;color:var(--ink)}
+.watch p.dim{color:var(--muted);font-size:.88rem}
+.watch ul{margin:0;padding-left:18px;font-size:.9rem}
+.watch li{margin:0 0 2px}
+
+/* Ask */
+.ask{display:grid;grid-template-columns:1fr;gap:14px}
+.ask .card p{font-size:.92rem;color:var(--ink)}
+
+footer{max-width:1280px;margin:0 auto;padding:0 24px 36px;display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.85rem}
+footer img{width:44px;height:auto;opacity:.85}
+footer .wm{font-family:Aboreto,Georgia,serif;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;color:var(--ink)}
+
+@media (max-width:980px){
+  .cards{grid-template-columns:1fr 1fr}
+  .watch{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  header,.wrap,footer{padding-left:16px;padding-right:16px}
+  h1{font-size:1.4rem}
+  .cards{grid-template-columns:1fr}
+  .card{padding:14px}
+}
+@media print{
+  @page{size:Letter;margin:0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{background:var(--bg)}
+  body{padding:9mm 8mm 8mm;font-size:13px}
+  header{padding-top:0}
+  h1{font-size:1.5rem}
+  h2{margin-bottom:6px}
+  .wrap{gap:10px;padding-top:6px;padding-bottom:10px}
+  .btn{display:none}
+  .cards{grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+  .watch{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .card{break-inside:avoid;padding:10px 12px;gap:5px;border-radius:10px}
+  .card .num{width:26px;height:26px;font-size:.9rem}
+  .card h3{font-size:.95rem}
+  .card .say{border-left:none;background:transparent;padding:0;font-weight:bold;font-size:.92rem}
+  .card p,.watch p,.watch ul{font-size:.82rem}
+  a{text-decoration:none;color:inherit}
+  footer a::after{content:" " attr(href);color:var(--muted)}
+  footer{padding-bottom:0}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Legacy Windows &amp; Doors · BidConnect</div>
+  <h1>BidConnect: making a change</h1>
+  <p>Changes now go through a branch and a pull request. Claude Code does the git; you say the sentences.</p>
+</header>
+
+<div class="wrap">
+  <section>
+    <h2>To make a change<small>Four sentences, in order. Copy each one into Claude Code.</small></h2>
+    <div class="cards">
+      <div class="card">
+        <div class="num">1</div>
+        <h3>Start</h3>
+        <p class="say"><q>Start a new branch called <var>name</var> and make this change: <var>what</var>.</q></p>
+        <p>Give the branch a short name, like <b>fix-zone-rates</b>, then describe the change the way you would to a person.</p>
+        <button class="btn" data-copy="Start a new branch called <name> and make this change: <what>.">Copy sentence</button>
+      </div>
+      <div class="card">
+        <div class="num">2</div>
+        <h3>Push and preview</h3>
+        <p class="say"><q>Push it and give me the preview link.</q></p>
+        <p>Vercel emails you the preview link a couple of minutes later. It needs your Vercel login. Try the change there before you send it on.</p>
+        <button class="btn" data-copy="Push it and give me the preview link.">Copy sentence</button>
+      </div>
+      <div class="card">
+        <div class="num">3</div>
+        <h3>Send it for merge</h3>
+        <p class="say"><q>Open a pull request.</q></p>
+        <p>Claude opens it and gives you the link to the pull request page on GitHub.</p>
+        <button class="btn" data-copy="Open a pull request.">Copy sentence</button>
+      </div>
+      <div class="card merge">
+        <div class="num">4</div>
+        <h3>Merge</h3>
+        <p class="say">Open the pull request page and look at the box at the bottom.</p>
+        <p><b>Green "Merge pull request" button:</b> click it, then Confirm. The live app updates within minutes.</p>
+        <p><b>"Review required" with Levi's name:</b> you are done. Levi reviews and merges, same day this week.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What to watch for</h2>
+    <div class="watch">
+      <div class="card">
+        <h3>The two endings on the pull request page</h3>
+        <p><span class="pill" style="background:var(--live)">Green button</span>Nobody else needs to look. Click Merge pull request, then Confirm.</p>
+        <p><span class="pill" style="background:var(--fix)">Review required</span>Levi is on it. Nothing more to do; you will see his approval on the same page.</p>
+      </div>
+      <div class="card">
+        <h3>If Claude says the push was refused</h3>
+        <p class="dim">The message looks like <code>GH013: Repository rule violations found</code>. It means the change tried to go straight to the live branch. Nothing is lost. Type this and carry on from step 3:</p>
+        <p class="say"><q>Put this on a branch and open a pull request.</q></p>
+        <button class="btn" data-copy="Put this on a branch and open a pull request.">Copy sentence</button>
+      </div>
+      <div class="card">
+        <h3>Which changes wait for Levi</h3>
+        <ul>
+          <li>Sign-in and signing</li>
+          <li>Database changes</li>
+          <li>The paid Claude call</li>
+          <li>Environment and deploy settings</li>
+          <li>Connector credentials</li>
+        </ul>
+        <p class="dim">Everything else merges on its own: screens, pricing, costing, zones, proposal output, the gallery, tests.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>To ask for something</h2>
+    <div class="ask">
+      <div class="card">
+        <p>For now, email Levi, or open an issue on the repository: <a href="https://github.com/legacy-windows/legacy-estimator/issues" target="_blank" rel="noopener">github.com/legacy-windows/legacy-estimator/issues</a>, then <b>New issue</b>. Say what you want and why. A request card inside Claude is coming later.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <img src="data:image/png;base64,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" alt="Upstream Consulting" data-asset="logo-symbol.png">
+  <div><span class="wm">Upstream Consulting</span><br>Prepared for Legacy Windows &amp; Doors, 2026-09-29. Questions: levi@upstreamconsulting.ca<br>Setting up the accounts: <a href="https://upstreamconsulting.github.io/client-deliverables/legacy-windows/bidconnect-setup/index.html">the setup page</a>.</div>
+</footer>
+
+<script>
+function copyText(t){
+  if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);
+  return new Promise((res,rej)=>{const ta=document.createElement("textarea");ta.value=t;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();try{document.execCommand("copy")?res():rej()}catch(e){rej(e)}document.body.removeChild(ta)});
+}
+document.querySelectorAll(".btn[data-copy]").forEach(btn=>{
+  const label=btn.textContent;
+  btn.addEventListener("click",()=>{
+    copyText(btn.dataset.copy).then(()=>{btn.textContent="Copied";btn.classList.add("ok");setTimeout(()=>{btn.textContent=label;btn.classList.remove("ok")},2000)}).catch(()=>{btn.textContent="Select and copy: "+btn.dataset.copy});
+  });
+});
+</script>
+</body>
+</html>
